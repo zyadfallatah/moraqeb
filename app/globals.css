@@ -43,6 +43,9 @@
   --radius-xl: calc(var(--radius) + 4px);
 }
 
+@theme {
+  --color-primary: #1b8354;
+}
 :root {
   --radius: 0.625rem;
   --background: oklch(1 0 0);
