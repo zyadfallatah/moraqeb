@@ -5,7 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import Logout from "../forms/Logout";
 
-export default async function Header() {
+export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
   // const { user, logout, isLoading } = useAuth();
   const user = await getCurrentUser();
 
@@ -59,9 +59,11 @@ export default async function Header() {
                   <Logout />
                 </div>
               ) : (
-                <Link href="/login">
-                  <Button>تسجيل الدخول</Button>
-                </Link>
+                !hideLogin && (
+                  <Link href="/login">
+                    <Button>تسجيل الدخول</Button>
+                  </Link>
+                )
               )}
             </>
           </div>
