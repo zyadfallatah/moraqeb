@@ -11,9 +11,6 @@ const ibmPlex = IBM_Plex_Sans_Arabic({
 export const metadata: Metadata = {
   title: "مرقب",
   description: "مراقبة حالة العقارات و الصكوك",
-  icons: {
-    icon: "./favicon.svg",
-  },
 };
 
 export default function RootLayout({
