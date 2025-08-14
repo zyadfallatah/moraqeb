@@ -36,12 +36,12 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
               >
                 الخدمات
               </a>
-              <a
-                href="#"
+              <Link
+                href="/contact"
                 className="text-gray-700 hover:text-green-600 font-medium"
               >
                 تواصل معنا
-              </a>
+              </Link>
             </nav>
           </div>
           <div className="flex items-center gap-5 space-x-reverse">
