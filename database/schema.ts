@@ -16,3 +16,6 @@ export type NewUser = Omit<
   typeof users.$inferInsert,
   "id" | "createdAt" | "updatedAt" | "name"
 >;
+
+// Type for user data without password (used in responses and sessions)
+export type UserWithoutPassword = Omit<User, "password">;
