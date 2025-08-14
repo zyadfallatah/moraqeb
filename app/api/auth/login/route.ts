@@ -69,7 +69,6 @@ export async function POST(request: NextRequest) {
     });
 
     response.cookies.set("user-data", JSON.stringify(userWithoutPassword), {
-      httpOnly: false, // Allow client-side access
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60, // 7 days
