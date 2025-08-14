@@ -4,6 +4,8 @@ import db from "@/database";
 import { users } from "@/database/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
+import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export async function POST(request: NextRequest) {
   try {

@@ -17,10 +17,10 @@ const Logout = () => {
       onClick={async () => {
         await logout();
         router.push("/");
+        router.refresh();
       }}
     >
-      <LogOut className="w-4 h-4 ml-2" />
-      تسجيل الخروج
+      <LogOut className="w-4 h-4" />
     </Button>
   );
 };

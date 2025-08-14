@@ -11,7 +11,6 @@ import {
   setAuthToken,
   getAuthToken,
   setUserData,
-  getUserData,
   clearAuthCookies,
 } from "./cookie-utils";
 import { User } from "@/database/schema";
@@ -23,36 +22,12 @@ interface AuthContextType {
     password: string
   ) => Promise<{ success: boolean; error?: string }>;
   logout: () => Promise<void>;
-  isLoading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    // Check if user is already logged in (from cookies)
-    const checkAuth = () => {
-      try {
-        const storedUser = getUserData();
-        const token = getAuthToken();
-
-        if (storedUser && token) {
-          setUser(storedUser);
-        }
-      } catch (error) {
-        console.error("Error checking auth:", error);
-        // Clear invalid data
-        clearAuthCookies();
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    checkAuth();
-  }, []); // Empty dependency array - only run once on mount
 
   const login = async (ssn: string, password: string) => {
     try {
@@ -101,7 +76,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user,
     login,
     logout,
-    isLoading,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

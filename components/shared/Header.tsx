@@ -7,10 +7,7 @@ import Logout from "../forms/Logout";
 import HeaderService from "../cards/HeaderService";
 
 export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
-  // const { user, logout, isLoading } = useAuth();
   const user = await getCurrentUser();
-
-  console.log(user);
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -66,12 +63,18 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
 
             <>
               {user ? (
-                <div className="flex items-center gap-4 space-x-reverse">
-                  <span className="text-sm text-gray-700">
-                    مرحباً، {user.name}
-                  </span>
-                  <Logout />
-                </div>
+                <Link
+                  href={`/profile/${user.id}`}
+                  className="flex items-center gap-4 space-x-reverse text-sm text-gray-700 shadow p-2 px-4 cursor-pointer"
+                >
+                  <Image
+                    src="/assets/person.svg"
+                    alt="avatar"
+                    width={20}
+                    height={40}
+                  />
+                  <span className="">أهلاً بك {user.name}</span>
+                </Link>
               ) : (
                 !hideLogin && (
                   <Link href="/login">
