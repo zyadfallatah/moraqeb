@@ -4,7 +4,6 @@ import db from "@/database";
 import { users, type User } from "@/database/schema";
 import { eq } from "drizzle-orm";
 import { verifyToken } from "@/lib/auth/auth-utils";
-import { clearAuthCookies, getAuthToken } from "../auth/cookie-utils";
 
 export async function getUserBySSN(ssn: string): Promise<User | null> {
   const [user] = await db.select().from(users).where(eq(users.ssn, ssn));

@@ -5,7 +5,7 @@ import React from "react";
 const HeaderService = () => {
   return (
     <Link
-      href="/"
+      href="/lands"
       className="flex items-center p-4 shadow w-fit rounded-2xl px-8"
     >
       <Image

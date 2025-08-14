@@ -45,6 +45,10 @@
   --color-primary: #1b8354;
   --color-primary-dark: #0d4e37;
   --color-accent: #e1b464;
+
+  --color-success: #7dd089;
+  --color-warning: #d07d7e;
+  --color-potential: #f7d794;
 }
 :root {
   --radius: 0.625rem;
