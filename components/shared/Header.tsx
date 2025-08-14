@@ -41,9 +41,11 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
                 <div className="-z-50 absolute opacity-0 duration-[400ms] w-full p-5 shadow bg-white top-[10rem] group-hover:block group-hover:z-10 group-hover:top-[4rem] group-hover:opacity-100 right-1/2 translate-x-1/2 max-w-7xl">
                   <h2 className="text-xl font-bold mb-3">الخدمات</h2>
                   <nav className="flex gap-5">
-                    <HeaderService />
-                    <HeaderService />
-                    <HeaderService />
+                    <HeaderService
+                      href="/lands"
+                      logo="land.svg"
+                      service="تتبع الأراضي"
+                    />
                   </nav>
                 </div>
               </div>

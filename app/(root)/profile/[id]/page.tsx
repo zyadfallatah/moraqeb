@@ -105,8 +105,8 @@ const page = async ({
         <p className="text-2xl text-gray-500">يتجدد خلال 4 أشهر</p>
       </div>
 
-      <div className="bg-[#FFFEFC] py-20 px-6">
-        <div className="max-w-7xl mx-auto flex">
+      <div className="bg-[#FFFEFC] py-20 px-6 rounded-t-2xl">
+        <div className="max-w-7xl mx-auto flex gap-8">
           <div className="flex flex-1 flex-col items-center">
             <h3 className="text-4xl font-bold text-black">المزايا</h3>
             <div className="grid grid-cols-2 gap-x-3 gap-y-5 max-w-5xl mx-auto mt-10">
