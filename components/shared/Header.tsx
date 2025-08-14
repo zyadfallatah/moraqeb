@@ -4,10 +4,10 @@ import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import HeaderService from "../cards/HeaderService";
+import Logout from "../forms/Logout";
 
 export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
   const user = await getCurrentUser();
-  console.log(user);
 
   return (
     <header className="bg-white shadow-sm border-b">
@@ -43,7 +43,7 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
                   <nav className="flex gap-5">
                     <HeaderService
                       href="/lands"
-                      logo="land.svg"
+                      logo="about-1.svg"
                       service="تتبع الأراضي"
                     />
                   </nav>
@@ -65,18 +65,21 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
 
             <>
               {user ? (
-                <Link
-                  href={`/profile/${user.id}`}
-                  className="flex items-center gap-4 space-x-reverse text-sm text-gray-700 shadow p-2 px-4 cursor-pointer"
-                >
-                  <Image
-                    src="/assets/person.svg"
-                    alt="avatar"
-                    width={20}
-                    height={40}
-                  />
-                  <span className="">أهلاً بك {user.name}</span>
-                </Link>
+                <div className="flex items-center gap-4">
+                  <Link
+                    href={`/profile/${user.id}`}
+                    className="flex items-center gap-4 space-x-reverse text-sm text-gray-700 shadow p-2 px-4 cursor-pointer"
+                  >
+                    <Image
+                      src="/assets/person.svg"
+                      alt="avatar"
+                      width={20}
+                      height={40}
+                    />
+                    <span className="">أهلاً بك {user.name}</span>
+                  </Link>
+                  <Logout />
+                </div>
               ) : (
                 !hideLogin && (
                   <Link href="/login">

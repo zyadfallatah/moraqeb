@@ -15,7 +15,7 @@ const HeaderService = ({ logo, service, href }: Props) => {
       className="flex items-center p-4 shadow w-fit rounded-2xl px-8"
     >
       <Image
-        src="/assets/about-1.svg"
+        src={`/assets/${logo}`}
         alt="Services"
         width={60}
         height={40}

@@ -1,11 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
 import { generateToken } from "@/lib/auth/auth-utils";
 import db from "@/database";
-import { users } from "@/database/schema";
+import { users, type UserWithoutPassword } from "@/database/schema";
 import { eq } from "drizzle-orm";
 import bcrypt from "bcryptjs";
-import { redirect } from "next/navigation";
-import { revalidatePath } from "next/cache";
+import { createUserSession } from "@/lib/actions/authActions";
 
 export async function POST(request: NextRequest) {
   try {
@@ -52,30 +51,18 @@ export async function POST(request: NextRequest) {
 
     // Return user data (without password) and token
     const { password: _, ...userWithoutPassword } = user;
+    const safeUser: UserWithoutPassword = userWithoutPassword;
 
-    // Create response with cookies
+    // Create response
     const response = NextResponse.json({
       success: true,
-      user: userWithoutPassword,
+      user: safeUser,
       token,
       message: "Login successful",
     });
 
-    // Set authentication cookies
-    response.cookies.set("auth-token", token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60, // 7 days
-      path: "/",
-    });
-
-    response.cookies.set("user-data", JSON.stringify(userWithoutPassword), {
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 7 * 24 * 60 * 60, // 7 days
-      path: "/",
-    });
+    // Set cookies using server action
+    await createUserSession(safeUser, token);
 
     return response;
   } catch (error) {

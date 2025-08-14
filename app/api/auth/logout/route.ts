@@ -1,11 +1,10 @@
-import { revalidatePath } from "next/cache";
 import { NextRequest, NextResponse } from "next/server";
+import { destroyUserSession } from "@/lib/actions/authActions";
 
 export async function POST(request: NextRequest) {
   try {
-    // Get the authorization header
+    // Get the authorization header for logging
     const authHeader = request.headers.get("authorization");
-
     if (authHeader && authHeader.startsWith("Bearer ")) {
       const token = authHeader.substring(7);
       console.log("User logged out, token:", token);
@@ -17,22 +16,8 @@ export async function POST(request: NextRequest) {
       message: "Logout successful",
     });
 
-    // Clear authentication cookies
-    response.cookies.set("auth-token", "", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 0, // Expire immediately
-      path: "/",
-    });
-
-    response.cookies.set("user-data", "", {
-      httpOnly: false,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: "strict",
-      maxAge: 0, // Expire immediately
-      path: "/",
-    });
+    // Clear session using server action
+    await destroyUserSession();
 
     return response;
   } catch (error) {

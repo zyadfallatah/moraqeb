@@ -3,12 +3,10 @@ import { Label } from "@radix-ui/react-label";
 import React, { useState } from "react";
 import { Button } from "../ui/button";
 import { Input } from "../ui/input";
-import { useAuth } from "@/lib/auth/auth-context";
 import { useRouter } from "next/navigation";
 
 const LoginForm = () => {
   const router = useRouter();
-  const { login } = useAuth();
   const [formFields, setFormFields] = useState<{
     ssn: string;
     password: string;
@@ -31,15 +29,28 @@ const LoginForm = () => {
 
     try {
       const { ssn, password } = formFields;
-      const result = await login(ssn, password);
-      if (result.success) {
+
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ ssn, password }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.success) {
         setFormFields({ ssn: "", password: "" });
+        // Redirect to home page - cookies are already set by server
         router.push("/");
+        // Force a page refresh to update server-side state
+        router.refresh();
       } else {
-        setError(result.error || "Login failed");
+        setError(data.error || "Login failed");
       }
-      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
+      console.error("Login error:", error);
       setError("An unexpected error occurred");
     } finally {
       setIsLoggingIn(false);

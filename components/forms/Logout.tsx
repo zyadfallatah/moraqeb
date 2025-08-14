@@ -1,28 +1,43 @@
 "use client";
-import React from "react";
-import { Button } from "../ui/button";
-import { LogOut } from "lucide-react";
-import { useAuth } from "@/lib/auth/auth-context";
+import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 
-const Logout = () => {
-  const { logout } = useAuth();
+interface LogoutProps {
+  variant?: "default" | "outline" | "ghost";
+  size?: "default" | "sm" | "lg";
+  className?: string;
+}
+
+export default function Logout({
+  variant = "outline",
+  size = "default",
+  className = "",
+}: LogoutProps) {
   const router = useRouter();
-  return (
-    <Button
-      variant="outline"
-      size="sm"
-      className="text-gray-700"
-      type="submit"
-      onClick={async () => {
-        await logout();
+  const handleLogout = async () => {
+    try {
+      const response = await fetch("/api/auth/logout", {
+        method: "POST",
+      });
+
+      if (response.ok) {
+        // Redirect to home page after logout
         router.push("/");
         router.refresh();
-      }}
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+    }
+  };
+
+  return (
+    <Button
+      variant={variant}
+      size={size}
+      onClick={handleLogout}
+      className={className}
     >
-      <LogOut className="w-4 h-4" />
+      تسجيل الخروج
     </Button>
   );
-};
-
-export default Logout;
+}
