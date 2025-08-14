@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/lib/actions/authActions";
-import { Search, LogOut } from "lucide-react";
+import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Logout from "../forms/Logout";
@@ -61,7 +61,7 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
               ) : (
                 !hideLogin && (
                   <Link href="/login">
-                    <Button>تسجيل الدخول</Button>
+                    <Button className="cursor-pointer">تسجيل الدخول</Button>
                   </Link>
                 )
               )}
