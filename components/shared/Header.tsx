@@ -10,6 +10,8 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
   // const { user, logout, isLoading } = useAuth();
   const user = await getCurrentUser();
 
+  console.log(user);
+
   return (
     <header className="bg-white shadow-sm border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
