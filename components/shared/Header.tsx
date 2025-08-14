@@ -24,12 +24,12 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
               >
                 الرئيسية
               </Link>
-              <a
-                href="#"
+              <Link
+                href="/about"
                 className="text-gray-700 hover:text-green-600 font-medium"
               >
                 عن مرقب
-              </a>
+              </Link>
               <a
                 href="#"
                 className="text-gray-700 hover:text-green-600 font-medium"

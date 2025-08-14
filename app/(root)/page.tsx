@@ -1,5 +1,4 @@
 import Service from "@/components/cards/Service";
-import Footer from "@/components/shared/Footer";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
@@ -118,8 +117,6 @@ export default async function Home() {
           </div>
         </div>
       </div>
-
-      <Footer />
     </div>
   );
 }
