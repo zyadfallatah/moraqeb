@@ -3,11 +3,11 @@ import { getCurrentUser } from "@/lib/actions/authActions";
 import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import Logout from "../forms/Logout";
 import HeaderService from "../cards/HeaderService";
 
 export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
   const user = await getCurrentUser();
+  console.log(user);
 
   return (
     <header className="bg-white shadow-sm border-b">
