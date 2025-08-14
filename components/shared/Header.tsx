@@ -4,6 +4,7 @@ import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import Logout from "../forms/Logout";
+import HeaderService from "../cards/HeaderService";
 
 export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
   // const { user, logout, isLoading } = useAuth();
@@ -12,7 +13,7 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
   return (
     <header className="bg-white shadow-sm border-b">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+        <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-5">
             <Image src={"/assets/logo.svg"} alt="Logo" width={40} height={40} />
@@ -30,12 +31,23 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
               >
                 عن مرقب
               </Link>
-              <a
-                href="#"
-                className="text-gray-700 hover:text-green-600 font-medium"
-              >
-                الخدمات
-              </a>
+              <div className="group text-gray-700 hover:text-green-600 font-medium flex items-center gap-1 py-5  cursor-pointer">
+                <p>الخدمات</p>
+                <Image
+                  src="/assets/arrow.svg"
+                  alt="Arrow down"
+                  width={15}
+                  height={10}
+                />
+                <div className="-z-50 absolute opacity-0 duration-[400ms] w-full p-5 shadow bg-white top-[10rem] group-hover:block group-hover:z-10 group-hover:top-[4rem] group-hover:opacity-100 right-1/2 translate-x-1/2 max-w-7xl">
+                  <h2 className="text-xl font-bold mb-3">الخدمات</h2>
+                  <nav className="flex gap-5">
+                    <HeaderService />
+                    <HeaderService />
+                    <HeaderService />
+                  </nav>
+                </div>
+              </div>
               <Link
                 href="/contact"
                 className="text-gray-700 hover:text-green-600 font-medium"
