@@ -4,9 +4,9 @@ import OnlySubscribed from "@/components/shared/OnlySubscribed";
 import { getCurrentUser } from "@/lib/actions/authActions";
 import { getLease } from "@/lib/actions/leaseActions";
 import { getLicenseNotices } from "@/lib/actions/noticeActions";
-import { ArrowBigLeft } from "lucide-react";
 import { redirect } from "next/navigation";
 import React from "react";
+import ArcGISMap from "@/components/ArcGISMap";
 
 const page = async ({
   params,
@@ -28,6 +28,9 @@ const page = async ({
 
   const { landNumber, district } = landLease.at(0)!;
 
+  // Determine notice type for map marker color
+  const noticeType = notices && notices.length > 0 ? notices[0].type : "info";
+
   return (
     <div className="max-w-7xl mx-auto">
       <div className="flex items-center">
@@ -38,7 +41,11 @@ const page = async ({
       </div>
 
       <div className="text-center w-full mx-auto min-h-[350px] shadow border rounded-xl grid place-items-center">
-        Here Will be the map
+        <ArcGISMap
+          latitude={21.4225}
+          longitude={39.8262}
+          noticeType={noticeType}
+        />
       </div>
 
       <OnlySubscribed>
