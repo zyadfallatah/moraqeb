@@ -94,7 +94,7 @@ const page = async ({
             {leases.map((lease) => (
               <ProfileLease
                 key={lease.licenseNumber}
-                title={lease.name}
+                title={`${lease.landNumber} , ${lease.district}`}
                 leaseNumber={lease.licenseNumber}
               />
             ))}
@@ -107,7 +107,7 @@ const page = async ({
             {leases.map((lease) => (
               <ProfileLease
                 key={lease.licenseNumber}
-                title={lease.name}
+                title={`${lease.landNumber} , ${lease.district}`}
                 leaseNumber={lease.licenseNumber}
               />
             ))}
