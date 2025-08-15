@@ -6,7 +6,7 @@ import { eq } from "drizzle-orm";
 
 export async function POST(request: NextRequest) {
   try {
-    const { ssn, password, name } = await request.json();
+    const { ssn, password, fullName, phone, birthDate } = await request.json();
 
     // Validate SSN - must be exactly 10 digits
     if (!ssn || !/^\d{10}$/.test(ssn)) {
@@ -17,7 +17,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Validate required fields
-    if (!password || !name) {
+    if (!password || !fullName) {
       return NextResponse.json(
         { error: "All fields are required" },
         { status: 400 }
@@ -44,9 +44,11 @@ export async function POST(request: NextRequest) {
     const [newUser] = await db
       .insert(users)
       .values({
+        fullName,
         ssn,
         password: hashedPassword,
-        name,
+        phone,
+        birthDate,
       })
       .returning();
 
