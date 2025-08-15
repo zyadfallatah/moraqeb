@@ -36,7 +36,8 @@ export const licenses = pgTable("licenses", {
   userId: uuid("user_id")
     .notNull()
     .references(() => users.id),
-  name: varchar("name", { length: 100 }).notNull(),
+  district: varchar("district", { length: 100 }).notNull(),
+  landNumber: varchar("land_number", { length: 100 }).notNull(),
   licenseArea: bigint("license_area", { mode: "number" }).notNull(),
   permission: permissionEnum("permission").notNull(),
   north: smallint("north"),

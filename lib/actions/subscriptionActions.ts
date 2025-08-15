@@ -2,18 +2,20 @@
 
 import db from "@/database";
 import { licenses, subscriptions } from "@/database/schema";
-import { and, eq, desc } from "drizzle-orm";
+import { eq, desc } from "drizzle-orm";
 
 export const getUserSubscriptions = async (userId: string) => {
   return await db
-    .select()
+    .select({
+      subscription: subscriptions,
+      license: licenses,
+    })
     .from(subscriptions)
-    .where(
-      and(
-        eq(subscriptions.licenseNumber, licenses.licenseNumber),
-        eq(licenses.userId, userId)
-      )
+    .innerJoin(
+      licenses,
+      eq(subscriptions.licenseNumber, licenses.licenseNumber)
     )
+    .where(eq(licenses.userId, userId))
     .orderBy(desc(subscriptions.signDate))
     .limit(1);
 };
