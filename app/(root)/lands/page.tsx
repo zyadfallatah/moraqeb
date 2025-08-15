@@ -1,14 +1,17 @@
-import NotSubscribed from "@/components/shared/NotSubscribed";
+import LeaseCard from "@/components/cards/LeaseCard";
 import { getCurrentUser } from "@/lib/actions/authActions";
+import { getUserLeases } from "@/lib/actions/leaseActions";
 import { redirect } from "next/navigation";
 import React from "react";
 
-const page = async () => {
+const Page = async () => {
   const user = await getCurrentUser();
 
   if (!user) {
     return redirect("/login");
   }
+  const leases = await getUserLeases(user.id);
+
   return (
     <div className="px-4 sm:px-6 lg:px-8">
       <h1 className="text-5xl font-bold text-primary py-5 text-center mb-10">
@@ -32,9 +35,13 @@ const page = async () => {
         </div>
       </div>
 
-      <NotSubscribed />
+      <div className="max-w-7xl mx-auto mt-4 gap-5 mb-12">
+        {leases.map((lease) => (
+          <LeaseCard key={lease.licenseNumber} lease={lease} />
+        ))}
+      </div>
     </div>
   );
 };
 
-export default page;
+export default Page;
