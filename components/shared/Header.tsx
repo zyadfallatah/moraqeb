@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import HeaderService from "../cards/HeaderService";
 import Logout from "../forms/Logout";
+import { getFirstName } from "@/lib/utils";
 
 export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
   const user = await getCurrentUser();
@@ -76,7 +77,9 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
                       width={20}
                       height={40}
                     />
-                    <span className="">أهلاً بك {user.name}</span>
+                    <span className="">
+                      أهلاً بك {getFirstName(user.fullName)}
+                    </span>
                   </Link>
                   <Logout />
                 </div>

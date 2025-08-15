@@ -4,6 +4,8 @@ import LicsenseFeature from "@/components/cards/LicsenseFeature";
 import ProfileLease from "@/components/cards/ProfileLease";
 import { Button } from "@/components/ui/button";
 import { getUserById } from "@/lib/actions/authActions";
+import { getUserLeases } from "@/lib/actions/leaseActions";
+import { formatDate, getFirstName } from "@/lib/utils";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
@@ -15,6 +17,11 @@ const page = async ({
 }) => {
   const { id } = await params;
   const user = await getUserById(id);
+  const leases = await getUserLeases(id);
+
+  if (!user) {
+    return <div>User not found</div>;
+  }
   return (
     <div className="bg-[#FAFAFC] pt-6">
       <div className="max-w-7xl px-4 py-10 mx-auto shadow bg-white rounded-2xl">
@@ -39,8 +46,8 @@ const page = async ({
               type="text"
               id="name"
               name="name"
-              value={user?.name ?? ""}
-              placeholder={user?.name ?? ""}
+              value={getFirstName(user.fullName)}
+              placeholder={getFirstName(user.fullName)}
               disabled
             />
           </div>
@@ -63,7 +70,7 @@ const page = async ({
               type="text"
               id="name"
               name="name"
-              value={user?.createdAt?.toISOString() ?? ""}
+              value={formatDate(user.birthDate!)}
               disabled
             />
           </div>
@@ -74,8 +81,8 @@ const page = async ({
               type="text"
               id="name"
               name="name"
-              value={user?.updatedAt?.toISOString() ?? ""}
-              placeholder={user?.name ?? ""}
+              value={formatDate(user.birthDate!)}
+              placeholder={getFirstName(user.fullName)}
               disabled
             />
           </div>
@@ -84,18 +91,26 @@ const page = async ({
         <div className="max-w-5xl mx-auto mt-12">
           <h2 className="text-2xl font-bold my-5">الصكوك الخاصة بي</h2>
           <div className="grid grid-cols-3 gap-x-10 shadow p-5">
-            <ProfileLease />
-            <ProfileLease />
-            <ProfileLease />
+            {leases.map((lease) => (
+              <ProfileLease
+                key={lease.licenseNumber}
+                title={lease.name}
+                leaseNumber={lease.licenseNumber}
+              />
+            ))}
           </div>
         </div>
 
         <div className="max-w-5xl mx-auto mt-12 ">
           <h2 className="text-2xl font-bold my-5">سجل صفقات الأراضي والعقود</h2>
           <div className="grid grid-cols-3 gap-x-10 shadow p-5">
-            <ProfileLease />
-            <ProfileLease />
-            <ProfileLease />
+            {leases.map((lease) => (
+              <ProfileLease
+                key={lease.licenseNumber}
+                title={lease.name}
+                leaseNumber={lease.licenseNumber}
+              />
+            ))}
           </div>
         </div>
       </div>
@@ -121,9 +136,18 @@ const page = async ({
               تفاصيل الاشتراك
             </h3>
             <div className="bg-white w-full flex justify-center  border border-[hsla(0,0%,0%,37%)] rounded-4xl p-4 shadow divide-x-2">
-              <LicsenseDetail />
-              <LicsenseDetail />
-              <LicsenseDetail />
+              <LicsenseDetail
+                title="نوع الاشتراك"
+                description={`رخصة لمدة 360 يومًا`}
+              />
+              <LicsenseDetail
+                title="نوع الاشتراك"
+                description={`رخصة لمدة 360 يومًا`}
+              />
+              <LicsenseDetail
+                title="نوع الاشتراك"
+                description={`رخصة لمدة 360 يومًا`}
+              />
             </div>
 
             <Link

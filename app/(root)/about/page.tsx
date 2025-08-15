@@ -13,7 +13,7 @@ const page = () => {
       </p>
 
       <div className="border shadow shadow-[hsl(0,0%,80%)] rounded-3xl p-6 my-20">
-        <h2 className="text-primary text-2xl font-bold">specializations</h2>
+        <h2 className="text-primary text-3xl font-bold">اختصاصات مرقب</h2>
         <div className="flex gap-4">
           <AboutCards />
           <AboutCards />
