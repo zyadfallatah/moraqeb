@@ -2,7 +2,7 @@
 
 import db from "@/database";
 import { licenses, subscriptions } from "@/database/schema";
-import { eq, desc } from "drizzle-orm";
+import { eq, desc, and, gte } from "drizzle-orm";
 
 export const getUserSubscriptions = async (userId: string) => {
   return await db
@@ -37,4 +37,21 @@ export const isSubscriptionValid = async (licenseNumber: string) => {
   const now = new Date();
 
   return now < dueDate;
+};
+
+export const getActiveSubscriptions = async (userId: string) => {
+  return await db
+    .select({
+      subscription: subscriptions,
+      license: licenses,
+    })
+    .from(subscriptions)
+    .innerJoin(
+      licenses,
+      eq(subscriptions.licenseNumber, licenses.licenseNumber)
+    )
+    .where(
+      and(eq(licenses.userId, userId), gte(subscriptions.dueDate, new Date()))
+    )
+    .orderBy(desc(subscriptions.dueDate));
 };

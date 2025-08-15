@@ -1,5 +1,6 @@
 import ArcGISMap from "@/components/ArcGISMap";
 import LeaseCard from "@/components/cards/LeaseCard";
+import OnlySubscribed from "@/components/shared/OnlySubscribed";
 import { getCurrentUser } from "@/lib/actions/authActions";
 import { getUserLeases } from "@/lib/actions/leaseActions";
 import { redirect } from "next/navigation";
@@ -19,7 +20,7 @@ const Page = async () => {
         الأراضي
       </h1>
       <div className="text-center w-full mx-auto max-w-7xl min-h-[350px] shadow border rounded-xl grid place-items-center">
-        <ArcGISMap latitude={21.4225} longitude={39.8262} noticeType="info" />
+        {/* <ArcGISMap latitude={21.4225} longitude={39.8262} noticeType="info" /> */}
       </div>
       <div className="flex max-w-7xl mx-auto mt-4 gap-5 mb-12">
         <div className="flex items-center gap-2">
@@ -35,12 +36,7 @@ const Page = async () => {
           <p>مخالف</p>
         </div>
       </div>
-
-      <div className="max-w-7xl mx-auto mt-4 gap-5 mb-12">
-        {leases.map((lease) => (
-          <LeaseCard key={lease.licenseNumber} lease={lease} />
-        ))}
-      </div>
+      <OnlySubscribed showActive={true} />
     </div>
   );
 };
