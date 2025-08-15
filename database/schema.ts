@@ -119,4 +119,4 @@ export type Notice = typeof notices.$inferSelect;
 export type NewNotice = Omit<typeof notices.$inferInsert, "id" | "sentDate">;
 
 // Type for user data without password (used in responses and sessions)
-export type UserWithoutPassword = User;
+export type UserWithoutPassword = Omit<User, "password">;
