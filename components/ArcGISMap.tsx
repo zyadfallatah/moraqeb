@@ -10,11 +10,33 @@ import MapView from "@arcgis/core/views/MapView";
 import Graphic from "@arcgis/core/Graphic";
 import Point from "@arcgis/core/geometry/Point";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
+import PopupTemplate from "@arcgis/core/PopupTemplate";
+
+interface Lease {
+  licenseNumber: string;
+  licenseType: "residential" | "commercial" | "industrial" | "agricultural";
+  landArea?: number; // in square meters
+  landCoordinates: {
+    latitude: number;
+    longitude: number;
+  };
+  // Optional: Specific land boundaries if available
+  landBoundaries?: Array<{
+    latitude: number;
+    longitude: number;
+  }>;
+  // Notice type for styling
+  noticeType?: "warning" | "violation" | "info";
+}
 
 interface ArcGISMapProps {
-  latitude: number;
-  longitude: number;
-  noticeType?: "warning" | "violation" | "info";
+  // Multiple leases to display
+  leases: Lease[];
+  // Map display options
+  showLandMarking?: boolean;
+  zoomLevel?: number;
+  // Auto-fit map to show all leases
+  autoFit?: boolean;
 }
 
 // Notice color scheme matching the app's design system
@@ -101,9 +123,10 @@ const MapErrorFallback: React.FC = () => (
 );
 
 const ArcGISMap: React.FC<ArcGISMapProps> = ({
-  latitude,
-  longitude,
-  noticeType = "info",
+  leases,
+  showLandMarking = true,
+  zoomLevel = 16,
+  autoFit = true,
 }) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
   const [mapError, setMapError] = useState<boolean>(false);
@@ -115,43 +138,119 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
 
     const initializeMap = async () => {
       try {
-        // Create the map view with proper map structure
-        view = new MapView({
-          container: mapRef.current!,
-          map: {
-            basemap: "streets-navigation-vector",
-          },
-          center: [longitude, latitude],
-          zoom: 14,
-        });
-
-        // Wait for the view to be ready
-        await view.when();
-
-        // Create and add the point graphic
-        const point = new Point({
-          longitude,
-          latitude,
-        });
-
-        // Use notice color scheme for marker
-        const markerColor = noticeColors[noticeType];
-        const markerSymbol = new SimpleMarkerSymbol({
-          color: markerColor,
-          outline: {
-            color: [255, 255, 255], // White outline
-            width: 2,
-          },
-        });
-
-        const pointGraphic = new Graphic({
-          geometry: point,
-          symbol: markerSymbol,
-        });
-
-        view.graphics.add(pointGraphic);
-
         // Reset error state on success
+        const map = new Map({
+          basemap: "hybrid",
+        }) as __esri.MapProperties;
+
+        // Handle multiple leases
+        if (!leases || leases.length === 0) {
+          // Default to Riyadh if no leases provided
+          const defaultCoords = { latitude: 24.7136, longitude: 46.6753 };
+          view = new MapView({
+            center: [defaultCoords.longitude, defaultCoords.latitude],
+            container: "viewDiv",
+            map: map,
+            zoom: zoomLevel,
+          });
+          return;
+        }
+
+        // Create graphics for all leases
+        const allGraphics: Graphic[] = [];
+        const allCoordinates: [number, number][] = [];
+
+        leases.forEach((lease, index) => {
+          // Create point for the lease location
+          const leasePoint = new Point({
+            longitude: lease.landCoordinates.longitude,
+            latitude: lease.landCoordinates.latitude,
+          });
+
+          // Create marker symbol with lease-specific notice color
+          const markerSymbol = new SimpleMarkerSymbol({
+            color: noticeColors[lease.noticeType || "info"],
+            size: 12,
+            outline: {
+              color: [255, 255, 255],
+              width: 2,
+            },
+          });
+
+          const leaseGraphic = new Graphic({
+            geometry: leasePoint,
+            symbol: markerSymbol,
+            attributes: {
+              name: `License: ${lease.licenseNumber}`,
+              description: `${lease.licenseType} license - Area: ${
+                lease.landArea || "N/A"
+              } sqm`,
+              licenseNumber: lease.licenseNumber,
+              licenseType: lease.licenseType,
+              landArea: lease.landArea,
+              noticeType: lease.noticeType,
+            },
+            popupTemplate: {
+              title: "<div class='custom-popup-title'>{name}</div>",
+              content: "<div class='custom-popup-content'>{description}</div>",
+            },
+          });
+
+          allGraphics.push(leaseGraphic);
+          allCoordinates.push([
+            lease.landCoordinates.longitude,
+            lease.landCoordinates.latitude,
+          ]);
+
+          // Add land marking if enabled and boundaries are provided
+          if (
+            showLandMarking &&
+            lease.landBoundaries &&
+            lease.landBoundaries.length > 0
+          ) {
+            // TODO: Implement land boundary marking when needed
+            console.log(
+              `Land marking enabled for lease ${lease.licenseNumber}:`,
+              lease.landBoundaries
+            );
+          }
+        });
+
+        // Create map view centered on first lease or auto-fit to all
+        if (autoFit && allCoordinates.length > 1) {
+          // Auto-fit to show all leases
+          view = new MapView({
+            container: "viewDiv",
+            map: map,
+            zoom: zoomLevel,
+          });
+
+          // Fit the view to show all graphics
+          view.when(() => {
+            view!.goTo({
+              target: allGraphics,
+              padding: 50,
+            });
+          });
+        } else {
+          // Center on first lease
+          const firstLease = leases[0];
+          view = new MapView({
+            center: [
+              firstLease.landCoordinates.longitude,
+              firstLease.landCoordinates.latitude,
+            ],
+            container: "viewDiv",
+            map: map,
+            zoom: zoomLevel,
+          });
+        }
+
+        // Add all lease graphics to the map
+        allGraphics.forEach((graphic) => {
+          view!.graphics.add(graphic);
+        });
+
         setMapError(false);
       } catch (error) {
         console.error("Error initializing map:", error);
@@ -166,14 +265,16 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
         view.destroy();
       }
     };
-  }, [latitude, longitude, noticeType]);
+  }, [leases, showLandMarking, zoomLevel, autoFit]);
 
   // Show error fallback if map failed to load
   if (mapError) {
     return <MapErrorFallback />;
   }
 
-  return <div ref={mapRef} style={{ height: "500px", width: "100%" }} />;
+  return (
+    <div ref={mapRef} id="viewDiv" style={{ height: "500px", width: "100%" }} />
+  );
 };
 
 // Wrapper component with Suspense

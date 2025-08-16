@@ -2,7 +2,7 @@
 
 import db from "@/database";
 import { licenses, subscriptions } from "@/database/schema";
-import { eq, desc, and, gte, lte, or, isNull, not, sql } from "drizzle-orm";
+import { eq, desc, and, gte, sql } from "drizzle-orm";
 
 export const getUserSubscriptions = async (userId: string) => {
   return await db

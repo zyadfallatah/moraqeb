@@ -5,7 +5,30 @@ import { getCurrentUser } from "@/lib/actions/authActions";
 import { getUserLeases } from "@/lib/actions/leaseActions";
 import { redirect } from "next/navigation";
 import React from "react";
-
+/*
+  Usage with multiple leases
+  <ArcGISMap
+    leases={[
+      {
+        licenseNumber: "LIC-2024-001",
+        licenseType: "residential",
+        landArea: 500,
+        landCoordinates: { latitude: 24.7136, longitude: 46.6753 },
+        noticeType: "info"
+      },
+      {
+        licenseNumber: "LIC-2024-002", 
+        licenseType: "commercial",
+        landArea: 1000,
+        landCoordinates: { latitude: 24.7138, longitude: 46.6755 },
+        noticeType: "warning"
+      }
+    ]}
+    showLandMarking={true}
+    zoomLevel={16}
+    autoFit={true}
+  />
+*/
 const Page = async () => {
   const user = await getCurrentUser();
 
@@ -20,7 +43,34 @@ const Page = async () => {
         الأراضي
       </h1>
       <div className="text-center w-full mx-auto max-w-7xl min-h-[350px] shadow border rounded-xl grid place-items-center">
-        {/* <ArcGISMap latitude={21.4225} longitude={39.8262} noticeType="info" /> */}
+        <ArcGISMap
+          leases={[
+            {
+              licenseNumber: "LIC-2024-001",
+              licenseType: "residential",
+              landArea: 500,
+              landCoordinates: { latitude: 24.7136, longitude: 46.6753 },
+              noticeType: "info",
+            },
+            {
+              licenseNumber: "LIC-2024-002",
+              licenseType: "commercial",
+              landArea: 1000,
+              landCoordinates: { latitude: 24.7138, longitude: 46.6755 },
+              noticeType: "warning",
+            },
+            {
+              licenseNumber: "LIC-2024-003",
+              licenseType: "industrial",
+              landArea: 2000,
+              landCoordinates: { latitude: 24.714, longitude: 46.6757 },
+              noticeType: "violation",
+            },
+          ]}
+          showLandMarking={true}
+          zoomLevel={16}
+          autoFit={true}
+        />
       </div>
       <div className="flex max-w-7xl mx-auto mt-4 gap-5 mb-12">
         <div className="flex items-center gap-2">
