@@ -3,10 +3,7 @@ import { Button } from "../ui/button";
 import Link from "next/link";
 import { getCurrentUser } from "@/lib/actions/authActions";
 import NotSignup from "./NotSignup";
-import {
-  getActiveSubscriptions,
-  isSubscriptionValid,
-} from "@/lib/actions/subscriptionActions";
+import { getActiveSubscriptions } from "@/lib/actions/subscriptionActions";
 import { getUserLeases } from "@/lib/actions/leaseActions";
 import { License } from "@/database/schema";
 import LeaseCard from "../cards/LeaseCard";
@@ -25,7 +22,7 @@ const OnlySubscribed = async ({ children, showActive }: Props) => {
 
   if (showActive && isSubscribed) {
     return (
-      <div className="max-w-7xl mx-auto mt-4 gap-5 mb-12">
+      <div className="max-w-7xl mx-auto mt-4 gap-5 mb-12 flex">
         {getActiveSubs.map((lease) => (
           <LeaseCard key={lease.license.licenseNumber} lease={lease.license} />
         ))}
@@ -39,7 +36,7 @@ const OnlySubscribed = async ({ children, showActive }: Props) => {
         <h3 className="text-3xl font-bold text-black max-w-[550px]">
           احصل على رخصة مرقب كي تستطيع ان تتطلع على آخر مستجدات اراضيك وتصنيفها
         </h3>
-        <Link href="#" className="block rounded-full">
+        <Link href="/subscription" className="block rounded-full">
           <Button className="bg-[#121E36] rounded-full text-[#FFDD47] font-bold px-28 text-3xl py-10 cursor-pointer">
             <span className="text-shadow-lg text-shadow-[#863434]">
               احصل عليها الآن!

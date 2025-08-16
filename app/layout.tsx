@@ -3,7 +3,7 @@ import { IBM_Plex_Sans_Arabic } from "next/font/google";
 import "./globals.css";
 
 const ibmPlex = IBM_Plex_Sans_Arabic({
-  weight: ["400", "700"],
+  weight: ["300", "400", "500", "700"],
   subsets: ["arabic"],
 });
 
