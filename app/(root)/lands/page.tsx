@@ -1,9 +1,34 @@
+import ArcGISMap from "@/components/ArcGISMap";
 import LeaseCard from "@/components/cards/LeaseCard";
+import OnlySubscribed from "@/components/shared/OnlySubscribed";
 import { getCurrentUser } from "@/lib/actions/authActions";
 import { getUserLeases } from "@/lib/actions/leaseActions";
 import { redirect } from "next/navigation";
 import React from "react";
-
+/*
+  Usage with multiple leases
+  <ArcGISMap
+    leases={[
+      {
+        licenseNumber: "LIC-2024-001",
+        licenseType: "residential",
+        landArea: 500,
+        landCoordinates: { latitude: 24.7136, longitude: 46.6753 },
+        noticeType: "info"
+      },
+      {
+        licenseNumber: "LIC-2024-002", 
+        licenseType: "commercial",
+        landArea: 1000,
+        landCoordinates: { latitude: 24.7138, longitude: 46.6755 },
+        noticeType: "warning"
+      }
+    ]}
+    showLandMarking={true}
+    zoomLevel={16}
+    autoFit={true}
+  />
+*/
 const Page = async () => {
   const user = await getCurrentUser();
 
@@ -18,28 +43,50 @@ const Page = async () => {
         الأراضي
       </h1>
       <div className="text-center w-full mx-auto max-w-7xl min-h-[350px] shadow border rounded-xl grid place-items-center">
-        Here Will be the map
+        <ArcGISMap
+          leases={[
+            {
+              licenseNumber: "LIC-2024-001",
+              licenseType: "residential",
+              landArea: 500,
+              landCoordinates: { latitude: 24.7136, longitude: 46.6753 },
+              noticeType: "info",
+            },
+            {
+              licenseNumber: "LIC-2024-002",
+              licenseType: "commercial",
+              landArea: 1000,
+              landCoordinates: { latitude: 24.7138, longitude: 46.6755 },
+              noticeType: "warning",
+            },
+            {
+              licenseNumber: "LIC-2024-003",
+              licenseType: "industrial",
+              landArea: 2000,
+              landCoordinates: { latitude: 24.714, longitude: 46.6757 },
+              noticeType: "violation",
+            },
+          ]}
+          showLandMarking={true}
+          zoomLevel={16}
+          autoFit={true}
+        />
       </div>
       <div className="flex max-w-7xl mx-auto mt-4 gap-5 mb-12">
         <div className="flex items-center gap-2">
-          <span className="min-w-[60px] h-5 bg-success rounded-full"></span>
+          <span className="min-w-[60px] h-5 bg-primary-dark rounded-full"></span>
           <p>مرخصة</p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="min-w-[60px] h-5 bg-potential rounded-full"></span>
-          <p>مخالف</p>
+          <span className="min-w-[60px] h-5 bg-accent rounded-full"></span>
+          <p>مهمل</p>
         </div>
         <div className="flex items-center gap-2">
           <span className="min-w-[60px] h-5 bg-warning rounded-full"></span>
-          <p>مهمل</p>
+          <p>مخالف</p>
         </div>
       </div>
-
-      <div className="max-w-7xl mx-auto mt-4 gap-5 mb-12">
-        {leases.map((lease) => (
-          <LeaseCard key={lease.licenseNumber} lease={lease} />
-        ))}
-      </div>
+      <OnlySubscribed showActive={true} />
     </div>
   );
 };
