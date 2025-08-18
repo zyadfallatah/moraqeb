@@ -59,7 +59,7 @@ const SubscriptionForm = ({
                       />
                       <div>
                         <div className="font-medium text-gray-900">
-                          {license.landNumber}
+                          {`قطعة ${license.landNumber}`}
                         </div>
                         <div className="text-sm text-gray-600">
                           {license.district}

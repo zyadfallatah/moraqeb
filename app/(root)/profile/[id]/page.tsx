@@ -90,11 +90,11 @@ const page = async ({
 
         <div className="max-w-5xl mx-auto mt-12">
           <h2 className="text-2xl font-bold my-5">الصكوك الخاصة بي</h2>
-          <div className="grid grid-cols-3 gap-x-10 shadow p-5">
+          <div className="grid grid-cols-3 gap-x-10  gap-y-6 shadow p-5">
             {leases.map((lease) => (
               <ProfileLease
                 key={lease.licenseNumber}
-                title={`${lease.landNumber} , ${lease.district}`}
+                title={`قطعة ${lease.landNumber} , ${lease.district}`}
                 leaseNumber={lease.licenseNumber}
               />
             ))}
@@ -103,11 +103,11 @@ const page = async ({
 
         <div className="max-w-5xl mx-auto mt-12 ">
           <h2 className="text-2xl font-bold my-5">سجل صفقات الأراضي والعقود</h2>
-          <div className="grid grid-cols-3 gap-x-10 shadow p-5">
+          <div className="grid grid-cols-3 gap-x-10 gap-y-6 shadow p-5">
             {leases.map((lease) => (
               <ProfileLease
                 key={lease.licenseNumber}
-                title={`${lease.landNumber} , ${lease.district}`}
+                title={`قطعة ${lease.landNumber} , ${lease.district}`}
                 leaseNumber={lease.licenseNumber}
               />
             ))}

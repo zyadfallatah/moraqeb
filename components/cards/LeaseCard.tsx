@@ -32,7 +32,7 @@ const LeaseCard = async ({ lease }: { lease: License }) => {
         <div className="flex gap-2">
           <Image src="/assets/logo.svg" alt="Logo" width={40} height={40} />
           <div>
-            <h3 className="text-xl font-bold">{lease.landNumber}</h3>
+            <h3 className="text-xl font-bold">{` قطعة ${lease.landNumber}`}</h3>
             <p className="text-gray-400">{lease.district}</p>
           </div>
         </div>

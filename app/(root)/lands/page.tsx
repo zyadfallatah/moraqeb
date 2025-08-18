@@ -4,30 +4,7 @@ import { getCurrentUser } from "@/lib/actions/authActions";
 import { getActiveLicensesWithNoticeType } from "@/lib/actions/noticeActions";
 import { redirect } from "next/navigation";
 import React from "react";
-/*
-  Usage with multiple leases
-  <ArcGISMap
-    leases={[
-      {
-        licenseNumber: "LIC-2024-001",
-        licenseType: "residential",
-        landArea: 500,
-        landCoordinates: { latitude: 24.7136, longitude: 46.6753 },
-        noticeType: "info"
-      },
-      {
-        licenseNumber: "LIC-2024-002", 
-        licenseType: "commercial",
-        landArea: 1000,
-        landCoordinates: { latitude: 24.7138, longitude: 46.6755 },
-        noticeType: "warning"
-      }
-    ]}
-    showLandMarking={true}
-    zoomLevel={16}
-    autoFit={true}
-  />
-*/
+
 const Page = async () => {
   const user = await getCurrentUser();
 
@@ -35,7 +12,6 @@ const Page = async () => {
     return redirect("/login");
   }
   const licenses = await getActiveLicensesWithNoticeType(user.id);
-  console.log(licenses);
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -46,7 +22,7 @@ const Page = async () => {
         <ArcGISMap
           leases={licenses}
           showLandMarking={true}
-          zoomLevel={16}
+          zoomLevel={18}
           autoFit={true}
         />
       </div>

@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useRef, Suspense, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 // ArcGIS JS API styles
 import "@arcgis/core/assets/esri/themes/light/main.css";
@@ -49,7 +49,10 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
           basemap: "hybrid",
         }) as __esri.MapProperties;
 
-        // Handle multiple leases
+        // Create graphics for all leases
+        const allGraphics: Graphic[] = [];
+        const allCoordinates: [number, number][] = [];
+
         if (!leases || leases.length === 0) {
           // Default to Riyadh if no leases provided
           const defaultCoords = { latitude: 24.7136, longitude: 46.6753 };
@@ -61,10 +64,6 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
           });
           return;
         }
-
-        // Create graphics for all leases
-        const allGraphics: Graphic[] = [];
-        const allCoordinates: [number, number][] = [];
 
         leases.forEach((lease, index) => {
           // Create point for the lease location
@@ -153,6 +152,9 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
       }
     };
   }, [leases, showLandMarking, zoomLevel, autoFit]);
+
+  if (!leases || leases!.length === 0)
+    return <div className="text-2xl text-primary">لا يوجد اراضي مرخصة</div>;
 
   return (
     <div ref={mapRef} id="viewDiv" style={{ height: "500px", width: "100%" }} />

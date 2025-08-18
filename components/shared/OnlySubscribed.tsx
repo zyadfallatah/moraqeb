@@ -22,7 +22,7 @@ const OnlySubscribed = async ({ children, showActive }: Props) => {
 
   if (showActive && isSubscribed) {
     return (
-      <div className="max-w-7xl mx-auto mt-4 gap-5 mb-12 flex">
+      <div className="max-w-7xl mx-auto mt-4 gap-5 mb-12 flex flex-wrap">
         {getActiveSubs.map((lease) => (
           <LeaseCard key={lease.license.licenseNumber} lease={lease.license} />
         ))}
