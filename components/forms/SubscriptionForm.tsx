@@ -100,7 +100,6 @@ const SubscriptionForm = ({
           type="button"
           onClick={() =>
             setStep(() => {
-              console.log(step);
               return step + 1;
             })
           }

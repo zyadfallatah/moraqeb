@@ -1,8 +1,7 @@
 import ArcGISMap from "@/components/ArcGISMap";
-import LeaseCard from "@/components/cards/LeaseCard";
 import OnlySubscribed from "@/components/shared/OnlySubscribed";
 import { getCurrentUser } from "@/lib/actions/authActions";
-import { getUserLeases } from "@/lib/actions/leaseActions";
+import { getActiveLicensesWithNoticeType } from "@/lib/actions/noticeActions";
 import { redirect } from "next/navigation";
 import React from "react";
 /*
@@ -35,7 +34,8 @@ const Page = async () => {
   if (!user) {
     return redirect("/login");
   }
-  const leases = await getUserLeases(user.id);
+  const licenses = await getActiveLicensesWithNoticeType(user.id);
+  console.log(licenses);
 
   return (
     <div className="px-4 sm:px-6 lg:px-8">
@@ -44,29 +44,7 @@ const Page = async () => {
       </h1>
       <div className="text-center w-full mx-auto max-w-7xl min-h-[350px] shadow border rounded-xl grid place-items-center">
         <ArcGISMap
-          leases={[
-            {
-              licenseNumber: "LIC-2024-001",
-              licenseType: "residential",
-              landArea: 500,
-              landCoordinates: { latitude: 24.7136, longitude: 46.6753 },
-              noticeType: "info",
-            },
-            {
-              licenseNumber: "LIC-2024-002",
-              licenseType: "commercial",
-              landArea: 1000,
-              landCoordinates: { latitude: 24.7138, longitude: 46.6755 },
-              noticeType: "warning",
-            },
-            {
-              licenseNumber: "LIC-2024-003",
-              licenseType: "industrial",
-              landArea: 2000,
-              landCoordinates: { latitude: 24.714, longitude: 46.6757 },
-              noticeType: "violation",
-            },
-          ]}
+          leases={licenses}
           showLandMarking={true}
           zoomLevel={16}
           autoFit={true}

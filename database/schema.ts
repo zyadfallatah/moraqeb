@@ -37,7 +37,7 @@ export const licenses = pgTable("licenses", {
     .notNull()
     .references(() => users.id),
   district: varchar("district", { length: 100 }).notNull(),
-  landNumber: varchar("land_number", { length: 100 }).notNull(),
+  landNumber: bigint("land_number", { mode: "bigint" }).notNull(),
   licenseArea: bigint("license_area", { mode: "number" }).notNull(),
   permission: permissionEnum("permission").notNull(),
   north: smallint("north"),
@@ -46,6 +46,8 @@ export const licenses = pgTable("licenses", {
   west: smallint("west"),
   createdAt: timestamp("created_at").defaultNow(),
   lastUpdated: timestamp("last_updated").defaultNow(),
+  longtitude: bigint("longtitude", { mode: "number" }).notNull(),
+  latitude: bigint("latitude", { mode: "number" }).notNull(),
 });
 
 // Subscriptions table

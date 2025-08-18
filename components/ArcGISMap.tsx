@@ -10,28 +10,11 @@ import MapView from "@arcgis/core/views/MapView";
 import Graphic from "@arcgis/core/Graphic";
 import Point from "@arcgis/core/geometry/Point";
 import SimpleMarkerSymbol from "@arcgis/core/symbols/SimpleMarkerSymbol";
-import PopupTemplate from "@arcgis/core/PopupTemplate";
-
-interface Lease {
-  licenseNumber: string;
-  licenseType: "residential" | "commercial" | "industrial" | "agricultural";
-  landArea?: number; // in square meters
-  landCoordinates: {
-    latitude: number;
-    longitude: number;
-  };
-  // Optional: Specific land boundaries if available
-  landBoundaries?: Array<{
-    latitude: number;
-    longitude: number;
-  }>;
-  // Notice type for styling
-  noticeType?: "warning" | "violation" | "info";
-}
+import { ActiveLicenseWithNoticeType } from "@/lib/actions/noticeActions";
 
 interface ArcGISMapProps {
   // Multiple leases to display
-  leases: Lease[];
+  leases: Awaited<ActiveLicenseWithNoticeType>;
   // Map display options
   showLandMarking?: boolean;
   zoomLevel?: number;
@@ -39,88 +22,11 @@ interface ArcGISMapProps {
   autoFit?: boolean;
 }
 
-// Notice color scheme matching the app's design system
 const noticeColors = {
   info: [13, 78, 55], // #0d4e37 - primary-dark
   warning: [225, 180, 100], // #e1b464 - accent
   violation: [208, 125, 126], // #d07d7e - warning
 };
-
-// Loading fallback component
-const MapLoadingFallback: React.FC = () => (
-  <div
-    style={{
-      height: "500px",
-      width: "100%",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: "#f5f5f5",
-      borderRadius: "8px",
-      border: "1px solid #e0e0e0",
-    }}
-  >
-    <div style={{ textAlign: "center" }}>
-      <div
-        style={{
-          width: "40px",
-          height: "40px",
-          border: "4px solid #f3f3f3",
-          borderTop: "4px solid #1b8354", // Using primary color
-          borderRadius: "50%",
-          animation: "spin 1s linear infinite",
-          margin: "0 auto 16px",
-        }}
-      />
-      <p style={{ margin: 0, color: "#666" }}>Loading map...</p>
-    </div>
-    <style jsx>{`
-      @keyframes spin {
-        0% {
-          transform: rotate(0deg);
-        }
-        100% {
-          transform: rotate(360deg);
-        }
-      }
-    `}</style>
-  </div>
-);
-
-// Error fallback component
-const MapErrorFallback: React.FC = () => (
-  <div
-    style={{
-      height: "500px",
-      width: "100%",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      backgroundColor: "#fef2f2",
-      borderRadius: "8px",
-      border: "1px solid #fecaca",
-    }}
-  >
-    <div style={{ textAlign: "center" }}>
-      <div
-        style={{
-          width: "48px",
-          height: "48px",
-          margin: "0 auto 16px",
-          color: "#dc2626",
-        }}
-      >
-        ⚠️
-      </div>
-      <p style={{ margin: 0, color: "#dc2626", fontWeight: "500" }}>
-        Failed to load map
-      </p>
-      <p style={{ margin: "8px 0 0 0", color: "#991b1b", fontSize: "14px" }}>
-        Please refresh the page or try again later
-      </p>
-    </div>
-  </div>
-);
 
 const ArcGISMap: React.FC<ArcGISMapProps> = ({
   leases,
@@ -163,8 +69,8 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
         leases.forEach((lease, index) => {
           // Create point for the lease location
           const leasePoint = new Point({
-            longitude: lease.landCoordinates.longitude,
-            latitude: lease.landCoordinates.latitude,
+            longitude: lease.longtitude,
+            latitude: lease.latitude,
           });
 
           // Create marker symbol with lease-specific notice color
@@ -182,13 +88,13 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
             symbol: markerSymbol,
             attributes: {
               name: `License: ${lease.licenseNumber}`,
-              description: `${lease.licenseType} license - Area: ${
-                lease.landArea || "N/A"
+              description: `${lease.permission} license - Area: ${
+                lease.licenseArea || "N/A"
               } sqm`,
               licenseNumber: lease.licenseNumber,
-              licenseType: lease.licenseType,
-              landArea: lease.landArea,
-              noticeType: lease.noticeType,
+              licenseType: lease.permission,
+              landArea: lease.licenseArea,
+              noticeType: lease.noticeType || "info",
             },
             popupTemplate: {
               title: "<div class='custom-popup-title'>{name}</div>",
@@ -197,23 +103,7 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
           });
 
           allGraphics.push(leaseGraphic);
-          allCoordinates.push([
-            lease.landCoordinates.longitude,
-            lease.landCoordinates.latitude,
-          ]);
-
-          // Add land marking if enabled and boundaries are provided
-          if (
-            showLandMarking &&
-            lease.landBoundaries &&
-            lease.landBoundaries.length > 0
-          ) {
-            // TODO: Implement land boundary marking when needed
-            console.log(
-              `Land marking enabled for lease ${lease.licenseNumber}:`,
-              lease.landBoundaries
-            );
-          }
+          allCoordinates.push([lease.longtitude, lease.latitude]);
         });
 
         // Create map view centered on first lease or auto-fit to all
@@ -236,10 +126,7 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
           // Center on first lease
           const firstLease = leases[0];
           view = new MapView({
-            center: [
-              firstLease.landCoordinates.longitude,
-              firstLease.landCoordinates.latitude,
-            ],
+            center: [firstLease.longtitude, firstLease.latitude],
             container: "viewDiv",
             map: map,
             zoom: zoomLevel,
@@ -267,23 +154,9 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
     };
   }, [leases, showLandMarking, zoomLevel, autoFit]);
 
-  // Show error fallback if map failed to load
-  if (mapError) {
-    return <MapErrorFallback />;
-  }
-
   return (
     <div ref={mapRef} id="viewDiv" style={{ height: "500px", width: "100%" }} />
   );
 };
 
-// Wrapper component with Suspense
-const ArcGISMapWithSuspense: React.FC<ArcGISMapProps> = (props) => {
-  return (
-    <Suspense fallback={<MapLoadingFallback />}>
-      <ArcGISMap {...props} />
-    </Suspense>
-  );
-};
-
-export default ArcGISMapWithSuspense;
+export default ArcGISMap;
