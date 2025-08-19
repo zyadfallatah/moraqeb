@@ -105,6 +105,7 @@ export const getActiveLicenseWithNoticeType = async (
     return {
       ...row.licenses,
       noticeType: row.notices?.type ?? "info",
+      noticeMessage: row.notices?.message ?? "",
     };
   } catch (error) {
     console.error(error);
