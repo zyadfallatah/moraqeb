@@ -12,7 +12,7 @@ const HeaderService = ({ logo, service, href }: Props) => {
   return (
     <Link
       href={href}
-      className="flex items-center p-4 shadow w-fit rounded-2xl px-8"
+      className="flex items-center p-4 shadow w-fit rounded-2xl px-8 cursor-pointer"
     >
       <Image
         src={`/assets/${logo}`}

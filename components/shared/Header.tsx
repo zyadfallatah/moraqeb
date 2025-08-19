@@ -52,8 +52,13 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
                       service="ترخيص ملبي"
                     />
                     <HeaderService
+                      href="/recommendation"
+                      logo="warning.svg"
+                      service="التوصيات"
+                    />
+                    <HeaderService
                       href="/alerts"
-                      logo="about-3.svg"
+                      logo="violation.svg"
                       service="التنبيهات"
                     />
                   </nav>

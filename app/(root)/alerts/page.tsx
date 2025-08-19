@@ -9,6 +9,10 @@ const page = async () => {
   if (!user) return redirect("/login");
 
   const licenses = await getActiveLicensesWithNoticeType(user.id);
+
+  const violations = licenses?.filter(
+    ({ noticeType }) => noticeType === "violation"
+  );
   return (
     <div className="py-10 min-h-[calc(100vh-4rem-334px)]">
       <h1 className="text-4xl text-primary text-center font-bold mb-5">
@@ -29,22 +33,14 @@ const page = async () => {
         </p>
       </div>
 
-      {licenses?.length === 0 && (
+      {violations?.length === 0 && (
         <div className="max-w-7xl mx-auto mt-10 text-center">
           لا توجد تنبيهات حالياً
         </div>
       )}
 
-      {licenses?.map(
-        ({
-          noticeType,
-          landNumber,
-          district,
-          licenseNumber,
-          noticeMessage,
-        }) => {
-          if (noticeType !== "violation") return null;
-
+      {violations?.map(
+        ({ landNumber, district, licenseNumber, noticeMessage }) => {
           return (
             <div
               key={licenseNumber}
