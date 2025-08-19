@@ -3,20 +3,15 @@ import ArrowBack from "@/components/shared/ArrowBack";
 import OnlySubscribed from "@/components/shared/OnlySubscribed";
 import { getCurrentUser } from "@/lib/actions/authActions";
 import { getLease } from "@/lib/actions/leaseActions";
-import { getLicenseNotices } from "@/lib/actions/noticeActions";
+import {
+  getActiveLicenseWithNoticeType,
+  getLicenseNotices,
+} from "@/lib/actions/noticeActions";
 import { redirect } from "next/navigation";
 import React from "react";
 import ArcGISMap from "@/components/ArcGISMap";
 import LiscenseInfo from "@/components/cards/LiscenseInfo";
 import { formatDate } from "@/lib/utils";
-/*
-  commercial: "تجاري",
-  residential: "سكني",
-  agricultural: "زراعي",
-  industrial: "صناعي",
-  government: "حكومي",
-  other: "آخر",
-*/
 const mapPermissions = {
   resident: "سكني",
   market: "تجاري",
@@ -33,6 +28,7 @@ const page = async ({
   const notices = await getLicenseNotices(id);
 
   if (!user) redirect("/login");
+  const license = await getActiveLicenseWithNoticeType(user.id, id);
 
   if (!landLease) return <div>Land not found</div>;
 
@@ -62,17 +58,18 @@ const page = async ({
     <div className="max-w-7xl mx-auto py-5">
       <div className="flex items-center">
         <h1 className="text-4xl font-bold text-primary py-5 text-center my-10 flex-1">
-          {landNumber} ، {district}
+          قطعة {landNumber} ، {district}
         </h1>
         <ArrowBack />
       </div>
 
       <div className="text-center w-full mx-auto min-h-[350px] shadow border rounded-xl grid place-items-center">
-        {/* <ArcGISMap
-          latitude={21.4225}
-          longitude={39.8262}
-          noticeType={noticeType}
-        /> */}
+        <ArcGISMap
+          leases={[license!]}
+          showLandMarking={true}
+          zoomLevel={18}
+          autoFit={true}
+        />
       </div>
 
       <OnlySubscribed>
@@ -88,7 +85,7 @@ const page = async ({
           <h2 className="text-primary text-3xl text-center">معلومات الصك</h2>
           <LiscenseInfo
             title="اسم الأرض"
-            info={`${district} ، ${landNumber}`}
+            info={`${district} ،  قطعة ${landNumber}`}
           />
           <LiscenseInfo title="رقم الصك" info={licenseNumber} />
           <LiscenseInfo title="المساحة" info={`${licenseArea} م²`} />
