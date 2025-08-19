@@ -35,7 +35,6 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
   autoFit = true,
 }) => {
   const mapRef = useRef<HTMLDivElement | null>(null);
-  const [mapError, setMapError] = useState<boolean>(false);
 
   useEffect(() => {
     if (!mapRef.current) return;
@@ -136,11 +135,8 @@ const ArcGISMap: React.FC<ArcGISMapProps> = ({
         allGraphics.forEach((graphic) => {
           view!.graphics.add(graphic);
         });
-
-        setMapError(false);
       } catch (error) {
         console.error("Error initializing map:", error);
-        setMapError(true);
       }
     };
 

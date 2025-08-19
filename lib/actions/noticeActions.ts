@@ -56,8 +56,6 @@ export const getActiveLicensesWithNoticeType = async (userId: string) => {
         )
       );
 
-    console.log(result);
-
     for (const row of result) {
       const licenseNumberKey = row.licenses.licenseNumber;
       if (!byLicense.has(licenseNumberKey)) {
@@ -67,10 +65,6 @@ export const getActiveLicensesWithNoticeType = async (userId: string) => {
         });
       }
     }
-
-    console.log(byLicense);
-
-    // console.log(byLicense);
 
     return Array.from(byLicense.values());
   } catch (error) {
