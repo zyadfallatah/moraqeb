@@ -1,6 +1,5 @@
 import { Button } from "@/components/ui/button";
 import { getCurrentUser } from "@/lib/actions/authActions";
-import { Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import HeaderService from "../cards/HeaderService";
@@ -12,7 +11,7 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
 
   return (
     <header className="bg-white shadow-sm border-b">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="lg:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between">
           {/* Logo */}
           <div className="flex items-center gap-5">
@@ -52,6 +51,16 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
                       logo="about-2.svg"
                       service="ترخيص ملبي"
                     />
+                    <HeaderService
+                      href="/recommendation"
+                      logo="warning.svg"
+                      service="التوصيات"
+                    />
+                    <HeaderService
+                      href="/alerts"
+                      logo="violation.svg"
+                      service="التنبيهات"
+                    />
                   </nav>
                 </div>
               </div>
@@ -64,11 +73,6 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
             </nav>
           </div>
           <div className="flex items-center gap-5 space-x-reverse">
-            <Button variant="ghost" size="sm" className="text-gray-700">
-              <Search className="w-4 h-4 ml-2" />
-              البحث
-            </Button>
-
             <>
               {user ? (
                 <div className="flex items-center gap-4">

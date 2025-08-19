@@ -20,7 +20,7 @@ export default async function Home() {
       </div>
 
       <div className="flex items-center flex-1 w-full pr-4 sm:pr-6 lg:pr-8 max-w-7xl">
-        <div className="flex-1">
+        <div className="flex-1 max-lg:py-20">
           <h2 className="text-6xl text-primary max-w-3xl">ما هو مرقب</h2>
           <p className="text-2xl mt-5">
             مُرَقِّب هو منصة ذكية لإدارة وتحليل الأراضي في مكة المكرمة والمشاعر
@@ -32,7 +32,7 @@ export default async function Home() {
         <Image
           src="/images/structure.png"
           alt="structure"
-          className="size-[720px]"
+          className="hidden lg:block lg:size-[720px]"
           width={1000}
           height={100}
         />
@@ -50,10 +50,15 @@ export default async function Home() {
         <h2 className="text-5xl  text-white text-center">
           خـــــــدمـــــــاتـــــــنـــــــــــــا
         </h2>
-        <div className="flex justify-center items-center gap-12">
-          <Service />
-          <Service />
-          <Service />
+        <div className="flex flex-col lg:flex-row justify-center items-center gap-12">
+          <Service
+            title="رقمنة الصكوك الرقمية"
+            description=" تحويل الصكوك الورقية إلى ملفات رقمية"
+          />
+          <Service
+            title="تتبع حالة ارضك"
+            description=" يمكنك مشاهدة صور عن حالة ارضك مع تنبيهات وتوصيات "
+          />
         </div>
       </div>
 
@@ -72,20 +77,20 @@ export default async function Home() {
           نحن هنا من أجلك! لأي سؤال أو ملاحظة، لا تتردد في التواصل معنا. 
         </h2>
 
-        <Link href="#" className="block w-fit mx-auto mt-11">
-          <Button className="bg-accent text-white text-3xl min-w-[500px] py-10 rounded-full cursor-pointer">
+        <Link href="#" className="block w-full lg:w-fit mx-auto mt-11">
+          <Button className="bg-accent text-white text-3xl w-full lg:min-w-[500px] py-10 rounded-full cursor-pointer">
             تواصل معنا
           </Button>
         </Link>
       </div>
 
       <div className="relative  min-h-[492px] w-full bg-linear-[58deg] from-[#194B36] to-[#3BB17F]">
-        <div className="relative flex flex-1 max-w-7xl mx-auto">
-          <div className="flex-1 min-h-[492px]">
+        <div className="relative flex flex-col lg:flex-row  flex-1 max-w-7xl mx-auto">
+          <div className="flex-1 min-h-[200px] lg:min-h-[492px]">
             <Image
               src="/images/phone.png"
               alt="hero"
-              className="absolute  top-[-140px] right-0 max-w-[500px] z-10"
+              className="absolute right-1/2 max-lg:translate-x-1/2 top-[-140px] lg:right-0 max-w-[300px] md:max-w-[500px] z-10"
               width={1000}
               height={1000}
             />
@@ -94,7 +99,7 @@ export default async function Home() {
             <h2 className="text-white text-4xl text-center mb-5">
               حمل التطبيق الآن
             </h2>
-            <div className="flex gap-5 w-full">
+            <div className="flex flex-col lg:flex-row gap-5 w-full">
               <div className="relative flex-1 flex justify-center items-center bg-linear-90 from-[#000] to-primary border border-[hsl(0,0%,50%)] rounded-2xl py-4">
                 <Image
                   className="z-20"

@@ -26,6 +26,7 @@ export const getLicenseNotices = async (licenseNumber: string) => {
 
 type LicenseWithNoticeType = License & {
   noticeType: Notice["type"] | "info";
+  noticeMessage: Notice["message"];
 };
 const byLicense = new Map<string, LicenseWithNoticeType>();
 
@@ -56,21 +57,16 @@ export const getActiveLicensesWithNoticeType = async (userId: string) => {
         )
       );
 
-    console.log(result);
-
     for (const row of result) {
       const licenseNumberKey = row.licenses.licenseNumber;
       if (!byLicense.has(licenseNumberKey)) {
         byLicense.set(licenseNumberKey, {
           ...row.licenses,
           noticeType: row.notices?.type ?? "info",
+          noticeMessage: row.notices?.message ?? "",
         });
       }
     }
-
-    console.log(byLicense);
-
-    // console.log(byLicense);
 
     return Array.from(byLicense.values());
   } catch (error) {
@@ -78,28 +74,15 @@ export const getActiveLicensesWithNoticeType = async (userId: string) => {
   }
 };
 
+export type ActiveLicenseWithNoticeType = ReturnType<
+  typeof getActiveLicensesWithNoticeType
+>;
+
 export const getActiveLicenseWithNoticeType = async (
   userId: string,
   licenseNumber: string
 ) => {
   try {
-    const subqueryActiveLicenses = db
-      .select({
-        licenses: licenses.licenseNumber,
-      })
-      .from(subscriptions)
-      .innerJoin(
-        licenses,
-        eq(subscriptions.licenseNumber, licenses.licenseNumber)
-      )
-      .where(
-        and(
-          eq(licenses.userId, userId),
-          eq(licenses.licenseNumber, licenseNumber),
-          gte(subscriptions.dueDate, new Date())
-        )
-      );
-
     const result = await db
       .select()
       .from(licenses)
@@ -122,13 +105,10 @@ export const getActiveLicenseWithNoticeType = async (
     return {
       ...row.licenses,
       noticeType: row.notices?.type ?? "info",
+      noticeMessage: row.notices?.message ?? "",
     };
   } catch (error) {
     console.error(error);
     return null;
   }
 };
-
-export type ActiveLicenseWithNoticeType = ReturnType<
-  typeof getActiveLicensesWithNoticeType
->;

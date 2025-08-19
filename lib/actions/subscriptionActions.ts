@@ -2,7 +2,8 @@
 
 import db from "@/database";
 import { licenses, subscriptions } from "@/database/schema";
-import { eq, desc, and, gte, sql } from "drizzle-orm";
+import { eq, desc, and, gte, sql, or, asc } from "drizzle-orm";
+import { getCurrentUser } from "./authActions";
 
 export const getUserSubscriptions = async (userId: string) => {
   return await db
@@ -56,6 +57,47 @@ export const getInActiveSubscriptions = async (userId: string) => {
     .select()
     .from(licenses)
     .where(sql`${licenses.licenseNumber} NOT IN (${subquery})`);
+};
+
+export const getAllLicensesIncludeSubscriptions = async (userId: string) => {
+  return await db
+    .select({
+      subscription: subscriptions,
+      license: licenses,
+    })
+    .from(licenses)
+    .leftJoin(
+      subscriptions,
+      eq(subscriptions.licenseNumber, licenses.licenseNumber)
+    )
+    .where(
+      or(eq(licenses.userId, userId), gte(subscriptions.dueDate, new Date()))
+    )
+    .orderBy(asc(subscriptions.dueDate));
+};
+
+export const getLicenseIncludeSubscription = async (licenseNumber: string) => {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) return null;
+
+  return await db
+    .select({
+      subscription: subscriptions,
+      license: licenses,
+    })
+    .from(licenses)
+    .leftJoin(
+      subscriptions,
+      eq(subscriptions.licenseNumber, licenses.licenseNumber)
+    )
+    .where(
+      and(
+        eq(licenses.licenseNumber, licenseNumber),
+        eq(licenses.userId, currentUser.id)
+      )
+    )
+    .orderBy(desc(subscriptions.dueDate));
 };
 
 export const verifyPayment = async ({
@@ -162,3 +204,7 @@ export const registerSubscription = async (licenseNumber: string) => {
     };
   }
 };
+
+export type ActiveLicenseIncludeSubscription = ReturnType<
+  typeof getAllLicensesIncludeSubscriptions
+>;

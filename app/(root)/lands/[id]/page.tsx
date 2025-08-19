@@ -51,9 +51,6 @@ const page = async ({
   } = landLease.at(0)!;
   const permissionName = mapPermissions[permission];
 
-  // Determine notice type for map marker color
-  // const noticeType = notices && notices.length > 0 ? notices[0].type : "info";
-
   return (
     <div className="max-w-7xl mx-auto py-5">
       <div className="flex items-center">
@@ -73,7 +70,7 @@ const page = async ({
       </div>
 
       <OnlySubscribed>
-        {notices!.length > 0 && notices && (
+        {notices !== null && notices && (
           <div className="flex flex-col gap-5 justify-center items-center mt-10 mb-5">
             {notices?.map((notice) => (
               <NoticeCard key={notice.id} notice={notice} />
@@ -81,7 +78,7 @@ const page = async ({
           </div>
         )}
 
-        <div className="max-w-7xl bg-white shadow shadow-black py-4 px-20">
+        <div className="max-w-7xl bg-white shadow shadow-black py-4 mt-5 px-20">
           <h2 className="text-primary text-3xl text-center">معلومات الصك</h2>
           <LiscenseInfo
             title="اسم الأرض"
