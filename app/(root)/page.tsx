@@ -51,9 +51,14 @@ export default async function Home() {
           خـــــــدمـــــــاتـــــــنـــــــــــــا
         </h2>
         <div className="flex flex-col lg:flex-row justify-center items-center gap-12">
-          <Service />
-          <Service />
-          <Service />
+          <Service
+            title="رقمنة الصكوك الرقمية"
+            description=" تحويل الصكوك الورقية إلى ملفات رقمية"
+          />
+          <Service
+            title="تتبع حالة ارضك"
+            description=" يمكنك مشاهدة صور عن حالة ارضك مع تنبيهات وتوصيات "
+          />
         </div>
       </div>
 

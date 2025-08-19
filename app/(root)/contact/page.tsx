@@ -18,8 +18,16 @@ const page = () => {
       <h2 className="text-3xl text-primary mt-20 mb-4">معلومات التواصل</h2>
 
       <main className="shadow space-y-5 shadow-[hsl(0,0%,80%)] p-6 mb-20">
-        <ContactInfo />
-        <ContactInfo />
+        <ContactInfo
+          logo="contact-phone.svg"
+          title="رقم الاتصال"
+          description="0506929945"
+        />
+        <ContactInfo
+          logo="contact-mail.svg"
+          title="البريد"
+          description="Muraqep@info.sa"
+        />
       </main>
     </div>
   );

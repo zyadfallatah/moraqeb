@@ -14,7 +14,7 @@ import { ActiveLicenseWithNoticeType } from "@/lib/actions/noticeActions";
 
 interface ArcGISMapProps {
   // Multiple leases to display
-  leases: Omit<Awaited<ActiveLicenseWithNoticeType>, "noticeMessage">;
+  leases: Awaited<ActiveLicenseWithNoticeType>;
   // Map display options
   showLandMarking?: boolean;
   zoomLevel?: number;
