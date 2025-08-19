@@ -26,6 +26,7 @@ export const getLicenseNotices = async (licenseNumber: string) => {
 
 type LicenseWithNoticeType = License & {
   noticeType: Notice["type"] | "info";
+  noticeMessage: Notice["message"];
 };
 const byLicense = new Map<string, LicenseWithNoticeType>();
 
@@ -62,6 +63,7 @@ export const getActiveLicensesWithNoticeType = async (userId: string) => {
         byLicense.set(licenseNumberKey, {
           ...row.licenses,
           noticeType: row.notices?.type ?? "info",
+          noticeMessage: row.notices?.message ?? "",
         });
       }
     }
@@ -72,28 +74,15 @@ export const getActiveLicensesWithNoticeType = async (userId: string) => {
   }
 };
 
+export type ActiveLicenseWithNoticeType = ReturnType<
+  typeof getActiveLicensesWithNoticeType
+>;
+
 export const getActiveLicenseWithNoticeType = async (
   userId: string,
   licenseNumber: string
 ) => {
   try {
-    const subqueryActiveLicenses = db
-      .select({
-        licenses: licenses.licenseNumber,
-      })
-      .from(subscriptions)
-      .innerJoin(
-        licenses,
-        eq(subscriptions.licenseNumber, licenses.licenseNumber)
-      )
-      .where(
-        and(
-          eq(licenses.userId, userId),
-          eq(licenses.licenseNumber, licenseNumber),
-          gte(subscriptions.dueDate, new Date())
-        )
-      );
-
     const result = await db
       .select()
       .from(licenses)
@@ -122,7 +111,3 @@ export const getActiveLicenseWithNoticeType = async (
     return null;
   }
 };
-
-export type ActiveLicenseWithNoticeType = ReturnType<
-  typeof getActiveLicensesWithNoticeType
->;
