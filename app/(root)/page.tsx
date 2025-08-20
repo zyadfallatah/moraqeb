@@ -66,7 +66,7 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="relative flex flex-col justify-center gap-11 text-center min-h-[710px] w-full px-4 sm:px-0">
+      <div className="relative flex flex-col justify-center gap-5 md:gap-11 text-center py-24 lg:min-h-[710px] w-full px-4 sm:px-0">
         <Image
           src="/images/contact-image.png"
           alt="about"
@@ -81,7 +81,10 @@ export default async function Home() {
           نحن هنا من أجلك! لأي سؤال أو ملاحظة، لا تتردد في التواصل معنا.
         </h2>
 
-        <Link href="#" className="block w-full lg:w-fit mx-auto mt-11">
+        <Link
+          href="/contact"
+          className="block w-full lg:w-fit mx-auto md:mt-11"
+        >
           <Button className="bg-accent text-white text-lg sm:text-xl md:text-2xl lg:text-3xl w-full lg:min-w-[500px] py-6 sm:py-8 lg:py-10 rounded-full cursor-pointer">
             تواصل معنا
           </Button>
