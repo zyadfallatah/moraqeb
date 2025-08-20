@@ -23,7 +23,7 @@ export default async function Home() {
 
       <div className="flex items-center flex-1 w-full pr-4 sm:pr-6 lg:pr-8 max-w-7xl px-4 sm:px-0">
         <div className="flex-1 max-lg:py-20">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary max-w-3xl">
+          <h2 className="text-center md:text-right text-3xl sm:text-4xl md:text-5xl lg:text-6xl text-primary max-w-3xl">
             ما هو مرقب
           </h2>
           <p className="text-base sm:text-lg md:text-xl lg:text-2xl mt-5">
