@@ -12,6 +12,7 @@ import React from "react";
 import ArcGISMap from "@/components/ArcGISMap";
 import LiscenseInfo from "@/components/cards/LiscenseInfo";
 import { formatDate } from "@/lib/utils";
+
 const mapPermissions = {
   resident: "سكني",
   market: "تجاري",

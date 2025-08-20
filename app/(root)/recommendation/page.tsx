@@ -41,7 +41,7 @@ const page = async () => {
               className="max-w-7xl mx-auto shadow-md rounded-lg px-10 py-8 mt-5 flex items-center justify-between"
             >
               <div>
-                <h2 className="text-primary text-2xl font-bold">
+                <h2 className="text-accent text-2xl font-bold">
                   {district} ، قطعة {landNumber}
                 </h2>
 

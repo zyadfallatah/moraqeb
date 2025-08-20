@@ -23,12 +23,16 @@ const NoticeCard = ({ notice }: { notice: Notice }) => {
           height={40}
           className="size-8"
         />
-        <p>{message}</p>
+        <p>
+          {notice.type === "warning"
+            ? "ارضك مهمله، اطلع على الفرص الاستثمارية"
+            : message}
+        </p>
       </div>
 
       {type === "warning" && (
         <Link
-          href="#"
+          href={`/recommendation/${notice.licenseNumber}`}
           className="bg-primary text-white rounded-2-xl px-5 py-2 min-w-[250px] text-center text-lg"
         >
           اذهب
