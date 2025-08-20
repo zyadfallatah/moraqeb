@@ -205,6 +205,38 @@ export const registerSubscription = async (licenseNumber: string) => {
   }
 };
 
+export const registerMultipleSubscriptions = async (
+  licenseNumbers: string[]
+) => {
+  try {
+    // Calculate due date (1 year from now)
+    const dueDate = new Date();
+    dueDate.setFullYear(dueDate.getFullYear() + 1);
+
+    // Prepare subscription data for all licenses
+    const subscriptionData = licenseNumbers.map((licenseNumber) => ({
+      amount: 100, // Fixed subscription amount
+      licenseNumber,
+      dueDate,
+      signDate: new Date(),
+    }));
+
+    // Insert all subscriptions in a single transaction
+    await db.insert(subscriptions).values(subscriptionData);
+
+    return {
+      success: true,
+      message: `تم تسجيل ${licenseNumbers.length} اشتراك بنجاح`,
+    };
+  } catch (error) {
+    console.error("Error registering multiple subscriptions:", error);
+    return {
+      success: false,
+      message: "فشل في تسجيل الاشتراكات",
+    };
+  }
+};
+
 export type ActiveLicenseIncludeSubscription = ReturnType<
   typeof getAllLicensesIncludeSubscriptions
 >;

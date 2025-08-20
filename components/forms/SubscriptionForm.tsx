@@ -13,8 +13,16 @@ const SubscriptionForm = ({
   licenses: License[];
   userId: string;
 }) => {
-  const [selectedLicense, setSelectedLicense] = useState<string>("");
+  const [selectedLicenses, setSelectedLicenses] = useState<string[]>([]);
   const [step, setStep] = useState(1);
+
+  const handleLicenseToggle = (licenseNumber: string) => {
+    setSelectedLicenses((prev) =>
+      prev.includes(licenseNumber)
+        ? prev.filter((id) => id !== licenseNumber)
+        : [...prev, licenseNumber]
+    );
+  };
 
   return (
     <>
@@ -24,26 +32,26 @@ const SubscriptionForm = ({
             رخــصـــــة مُــــرَقِّــــــب
           </h1>
           <h2 className="text-2xl md:text-3xl text-center font-extralight my-7">
-            إختر أرض واحدة لتمتلك رخصة مرقب
+            إختر الأراضي التي تريد الحصول على رخصة مرقب لها
           </h2>
           <div className="grid md:grid-cols-3 gap-3">
             {licenses.map((license) => (
               <div key={license.licenseNumber} className="relative">
                 <input
-                  type="radio"
+                  type="checkbox"
                   name="land"
                   id={license.licenseNumber}
                   value={license.licenseNumber}
-                  checked={selectedLicense === license.licenseNumber}
-                  onChange={(e) => setSelectedLicense(e.target.value)}
-                  className="sr-only" // This hides the radio button
+                  checked={selectedLicenses.includes(license.licenseNumber)}
+                  onChange={() => handleLicenseToggle(license.licenseNumber)}
+                  className="sr-only" // This hides the checkbox
                 />
                 <label
                   htmlFor={license.licenseNumber}
                   className={`
                 block p-4 border-2 rounded-lg cursor-pointer transition-all duration-200
                 ${
-                  selectedLicense === license.licenseNumber
+                  selectedLicenses.includes(license.licenseNumber)
                     ? "border-primary bg-primary/10 shadow-md"
                     : "border-gray-300 hover:border-primary/50 hover:bg-gray-50"
                 }
@@ -70,16 +78,16 @@ const SubscriptionForm = ({
                     <div className="flex mr-auto gap-2">
                       <div
                         className={`
-                  w-5 h-5 rounded-full border-2 flex items-center justify-center
+                  w-5 h-5 rounded border-2 flex items-center justify-center
                   ${
-                    selectedLicense === license.licenseNumber
+                    selectedLicenses.includes(license.licenseNumber)
                       ? "border-primary bg-primary"
                       : "border-gray-400"
                   }
                 `}
                       >
-                        {selectedLicense === license.licenseNumber && (
-                          <div className="w-2.5 h-2.5 rounded-full bg-white"></div>
+                        {selectedLicenses.includes(license.licenseNumber) && (
+                          <div className="w-2.5 h-2.5 bg-white"></div>
                         )}
                       </div>
                       <span>اختر</span>
@@ -92,7 +100,7 @@ const SubscriptionForm = ({
         </>
       )}
       {step === 2 && (
-        <Payment userId={userId} selectedLicense={selectedLicense} />
+        <Payment userId={userId} selectedLicenses={selectedLicenses} />
       )}
       {step === 1 && (
         <Button
@@ -103,7 +111,7 @@ const SubscriptionForm = ({
               return step + 1;
             })
           }
-          disabled={!selectedLicense}
+          disabled={selectedLicenses.length === 0}
         >
           المتابعة
         </Button>
