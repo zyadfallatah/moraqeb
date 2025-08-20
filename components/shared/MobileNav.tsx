@@ -132,7 +132,7 @@ export default function MobileNav({ user, hideLogin }: MobileNavProps) {
                 onClick={closeMenu}
                 className="block px-3 py-2 rounded hover:bg-gray-100 text-gray-700"
               >
-                ترخيص ملبي
+                رخصة ملبي
               </Link>
               <Link
                 href="/recommendation"
