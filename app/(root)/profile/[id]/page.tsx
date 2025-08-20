@@ -100,66 +100,6 @@ const page = async ({
             ))}
           </div>
         </div>
-
-        <div className="max-w-5xl mx-auto mt-12 ">
-          <h2 className="text-2xl font-bold my-5">سجل صفقات الأراضي والعقود</h2>
-          <div className="grid max-h-[400px] overflow-y-scroll md:grid-cols-3 gap-x-10 gap-y-6 shadow p-5">
-            {leases.map((lease) => (
-              <ProfileLease
-                key={lease.licenseNumber}
-                title={`قطعة ${lease.landNumber} , ${lease.district}`}
-                leaseNumber={lease.licenseNumber}
-              />
-            ))}
-          </div>
-        </div>
-      </div>
-
-      <div className="bg-[#E9F4EF] text-center pt-36 pb-9">
-        <h2 className="text-[#0A3929] font-bold text-5xl">رخصة مرقب</h2>
-        <p className="text-2xl text-gray-500">يتجدد خلال 4 أشهر</p>
-      </div>
-
-      <div className="bg-[#FFFEFC] py-20 px-6 rounded-t-2xl">
-        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
-          <div className="flex flex-1 flex-col items-center">
-            <h3 className="text-4xl font-bold text-black">المزايا</h3>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-5 max-w-5xl mx-auto mt-10">
-              <LicsenseFeature />
-              <LicsenseFeature />
-              <LicsenseFeature />
-              <LicsenseFeature />
-            </div>
-          </div>
-          <div className="flex flex-1 flex-col items-center">
-            <h3 className="text-4xl font-bold text-black mb-10">
-              تفاصيل الاشتراك
-            </h3>
-            <div className="bg-white w-full flex flex-col md:flex-row justify-center  border border-[hsla(0,0%,0%,37%)] rounded-4xl p-4 shadow divide-y-2 md:divide-y-0 md:divide-x-2">
-              <LicsenseDetail
-                title="نوع الاشتراك"
-                description={`رخصة لمدة 360 يومًا`}
-              />
-              <LicsenseDetail
-                title="نوع الاشتراك"
-                description={`رخصة لمدة 360 يومًا`}
-              />
-              <LicsenseDetail
-                title="نوع الاشتراك"
-                description={`رخصة لمدة 360 يومًا`}
-              />
-            </div>
-
-            <Link
-              href="#"
-              className="w-full text-2xl mt-5 cursor-pointer block"
-            >
-              <Button className="w-full p-7 text-2xl cursor-pointer">
-                الــــــغــــاء تـــجـــديـــد الاشـــــتــــراك
-              </Button>
-            </Link>
-          </div>
-        </div>
       </div>
     </div>
   );

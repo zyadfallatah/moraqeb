@@ -50,7 +50,7 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
                     <HeaderService
                       href="/subscription"
                       logo="about-2.svg"
-                      service="ترخيص ملبي"
+                      service="رخصة ملبي"
                     />
                     <HeaderService
                       href="/recommendation"
