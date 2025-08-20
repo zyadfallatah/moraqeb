@@ -279,10 +279,14 @@ const PaymentForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 className="text-4xl font-semibold text-primary mt-10">تأكيد الدفع</h1>
+      <h1 className="text-center md:text-right mb-2 text-4xl font-semibold text-primary mt-10">
+        تأكيد الدفع
+      </h1>
 
       <div className="max-w-2xl mx-auto">
-        <h2 className="text-2xl text-primary-dark">طرق الدفع المتاحة</h2>
+        <h2 className="text-center md:text-right text-2xl text-primary-dark mb-5">
+          طرق الدفع المتاحة
+        </h2>
 
         <div className="flex gap-5 mb-5">
           <Image

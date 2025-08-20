@@ -20,13 +20,13 @@ const SubscriptionForm = ({
     <>
       {step === 1 && (
         <>
-          <h1 className="text-6xl font-semibold text-primary text-center mt-10">
+          <h1 className="text-4xl md:text-6xl font-semibold text-primary text-center mt-10">
             رخــصـــــة مُــــرَقِّــــــب
           </h1>
-          <h2 className="text-3xl text-center font-extralight my-7">
+          <h2 className="text-2xl md:text-3xl text-center font-extralight my-7">
             إختر أرض واحدة لتمتلك رخصة مرقب
           </h2>
-          <div className="grid grid-cols-3 gap-3">
+          <div className="grid md:grid-cols-3 gap-3">
             {licenses.map((license) => (
               <div key={license.licenseNumber} className="relative">
                 <input
