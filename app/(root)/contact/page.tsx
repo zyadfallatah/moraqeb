@@ -5,10 +5,12 @@ import React from "react";
 const page = () => {
   return (
     <div className="px-4 sm:px-6 max-w-7xl mx-auto">
-      <div className="flex items-center justify-between mt-32">
+      <div className="flex flex-col items-center md:flex-row justify-between mt-32">
         <div>
-          <h1 className="text-primary text-5xl font-bold">اتصل بنا</h1>
-          <p className="text-black text-3xl mt-5">
+          <h1 className="text-primary text-center text-3xl md:text-5xl md:text-right font-bold">
+            اتصل بنا
+          </h1>
+          <p className="text-black text-center text-xl md:text-right md:text-2xl mt-5">
             نحن هنا من أجلك! لأي سؤال أو ملاحظة، لا تتردد في التواصل معنا. 
           </p>
         </div>
