@@ -66,13 +66,13 @@ export default async function Home() {
         </div>
       </div>
 
-      <div className="relative flex flex-col justify-center gap-5 md:gap-11 text-center py-24 lg:min-h-[710px] w-full px-4 sm:px-0">
+      <div className="relative flex flex-col justify-center gap-5 md:gap-11 text-center py-24 lg:min-h-[710px] w-full px-4">
         <Image
           src="/images/contact-image.png"
           alt="about"
-          width={1080}
+          width={500}
           height={580}
-          className="absolute w-full h-full -z-10"
+          className="absolute top-0 right-0 w-full h-full -z-10"
         />
         <h2 className="text-primary-dark font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl">
           هل لديـــك اســــتفــسار أو تـــحتــاج دعـــم؟
