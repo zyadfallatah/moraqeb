@@ -23,9 +23,9 @@ const page = async ({
   }
 
   return (
-    <div className="py-10 min-h-[calc(100vh-4rem-334px)]">
-      <div className="flex items-center max-w-7xl mx-auto mb-6">
-        <h1 className="text-4xl font-bold text-primary py-5 text-center flex-1">
+    <div className="py-10 min-h-[calc(100vh-4rem-334px)] px-5">
+      <div className="flex flex-col-reverse md:flex-row items-center max-w-7xl mx-auto mb-6">
+        <h1 className="text-2xl md:text-4xl font-bold text-primary py-5 text-center flex-1">
           قطعة {licenses?.landNumber} ، {licenses?.district}
         </h1>
         <ArrowBack />
@@ -61,7 +61,7 @@ const page = async ({
               return (
                 <p
                   key={id}
-                  className="max-w-4xl border rounded-2xl shadow-md p-5 py-7 text-[1.25rem]"
+                  className="max-w-4xl border rounded-2xl shadow-md p-5 py-7 md:text-[1.25rem]"
                 >
                   {message}
                 </p>
