@@ -1,17 +1,17 @@
 "use client";
 import {
   verifyPayment,
-  registerSubscription,
+  registerMultipleSubscriptions,
 } from "@/lib/actions/subscriptionActions";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
 
 const PaymentForm = ({
-  selectedLicense,
+  selectedLicenses,
   userId,
 }: {
-  selectedLicense: string;
+  selectedLicenses: string[];
   userId: string;
 }) => {
   const [formData, setFormData] = useState({
@@ -220,8 +220,9 @@ const PaymentForm = ({
 
         if (result.success) {
           try {
-            const subscriptionResult = await registerSubscription(
-              selectedLicense
+            // Register subscriptions for all selected licenses in a single transaction
+            const subscriptionResult = await registerMultipleSubscriptions(
+              selectedLicenses
             );
 
             if (subscriptionResult.success) {
@@ -234,10 +235,10 @@ const PaymentForm = ({
               });
             }
           } catch (error) {
-            console.error("Failed to register subscription:", error);
+            console.error("Failed to register subscriptions:", error);
             setPaymentResult({
               success: false,
-              message: "تم الدفع بنجاح ولكن فشل في تسجيل الاشتراك",
+              message: "تم الدفع بنجاح ولكن فشل في تسجيل الاشتراكات",
             });
           }
         }
@@ -262,9 +263,11 @@ const PaymentForm = ({
         <div className="mt-8 p-6 bg-green-50 border border-green-200 rounded-lg">
           <div className="text-6xl mb-4">✅</div>
           <h2 className="text-2xl text-green-800 mb-4">
-            تم تسجيل الاشتراك بنجاح
+            تم تسجيل الاشتراكات بنجاح
           </h2>
-          <p className="text-green-700 mb-6">تم تفعيل رخصة المراقب الخاصة بك</p>
+          <p className="text-green-700 mb-6">
+            تم تفعيل {selectedLicenses.length} رخصة مراقب
+          </p>
           <Link
             href="/lands"
             type="button"
@@ -287,6 +290,18 @@ const PaymentForm = ({
         <h2 className="text-center md:text-right text-2xl text-primary-dark mb-5">
           طرق الدفع المتاحة
         </h2>
+
+        <div className="mb-5 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+          <h3 className="text-lg font-semibold text-blue-800 mb-2">
+            ملخص الطلب
+          </h3>
+          <p className="text-blue-700">
+            عدد الأراضي المختارة: {selectedLicenses.length}
+          </p>
+          <p className="text-blue-700">
+            إجمالي المبلغ: {selectedLicenses.length * 100} ريال
+          </p>
+        </div>
 
         <div className="flex gap-5 mb-5">
           <Image
