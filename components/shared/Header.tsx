@@ -5,6 +5,7 @@ import Link from "next/link";
 import HeaderService from "../cards/HeaderService";
 import Logout from "../forms/Logout";
 import { getFirstName } from "@/lib/utils";
+import MobileNav from "@/components/shared/MobileNav";
 
 export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
   const user = await getCurrentUser();
@@ -12,7 +13,7 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
   return (
     <header className="bg-white shadow-sm border-b">
       <div className="lg:max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between py-2 md:py-0">
           {/* Logo */}
           <div className="flex items-center gap-5">
             <Image src={"/assets/logo.svg"} alt="Logo" width={40} height={40} />
@@ -72,34 +73,37 @@ export default async function Header({ hideLogin }: { hideLogin?: boolean }) {
               </Link>
             </nav>
           </div>
-          <div className="flex items-center gap-5 space-x-reverse">
-            <>
-              {user ? (
-                <div className="flex items-center gap-4">
-                  <Link
-                    href={`/profile/${user.id}`}
-                    className="flex items-center gap-4 space-x-reverse text-sm text-gray-700 shadow p-2 px-4 cursor-pointer"
-                  >
-                    <Image
-                      src="/assets/person.svg"
-                      alt="avatar"
-                      width={20}
-                      height={40}
-                    />
-                    <span className="">
-                      أهلاً بك {getFirstName(user.fullName)}
-                    </span>
-                  </Link>
-                  <Logout />
-                </div>
-              ) : (
-                !hideLogin && (
-                  <Link href="/login">
-                    <Button className="cursor-pointer">تسجيل الدخول</Button>
-                  </Link>
-                )
-              )}
-            </>
+          <div className="flex items-center gap-3 space-x-reverse">
+            <MobileNav user={user} hideLogin={hideLogin} />
+            <div className="hidden md:flex items-center gap-5 space-x-reverse">
+              <>
+                {user ? (
+                  <div className="flex items-center gap-4">
+                    <Link
+                      href={`/profile/${user.id}`}
+                      className="flex items-center gap-4 space-x-reverse text-sm text-gray-700 shadow p-2 px-4 cursor-pointer"
+                    >
+                      <Image
+                        src="/assets/person.svg"
+                        alt="avatar"
+                        width={20}
+                        height={40}
+                      />
+                      <span className="">
+                        أهلاً بك {getFirstName(user.fullName)}
+                      </span>
+                    </Link>
+                    <Logout />
+                  </div>
+                ) : (
+                  !hideLogin && (
+                    <Link href="/login">
+                      <Button className="cursor-pointer">تسجيل الدخول</Button>
+                    </Link>
+                  )
+                )}
+              </>
+            </div>
           </div>
         </div>
       </div>
