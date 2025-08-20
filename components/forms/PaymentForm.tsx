@@ -79,7 +79,7 @@ const PaymentForm = ({
 
     // Basic format validation - only numbers and spaces allowed
     if (!/^[\d\s]+$/.test(cardNumber)) {
-      return "رقم البطاقة يجب أن يحتوي على أرقام فقط";
+      return "رقم البطاقة يجب أن تحتوي على أرقام فقط";
     }
 
     return "";
@@ -436,6 +436,29 @@ const PaymentForm = ({
           >
             {isSubmitting ? "جاري المعالجة..." : "تأكيد الدفع"}
           </button>
+        </div>
+
+        {/* Test Credentials Section */}
+        <div className="mt-8 p-4 bg-green-50 border border-green-200 rounded-lg">
+          <h3 className="text-lg font-semibold text-green-800 mb-3 text-center">
+            بيانات الاختبار
+          </h3>
+          <div className="space-y-3 text-sm text-green-700">
+            <div className="text-center mb-3">
+              <p className="font-medium">البطاقة الناجحة:</p>
+            </div>
+            <div className="flex justify-between items-center">
+              <span className="font-medium">رقم البطاقة:</span>
+              <span className="font-mono bg-green-100 px-2 py-1 rounded">
+                1234 1234 2222 0000
+              </span>
+            </div>
+            <div className="text-center mt-3 p-2 bg-blue-50 border border-blue-200 rounded">
+              <p className="text-blue-700 text-xs">
+                البطاقات الأخرى تحتاج فقط إلى تنسيق صحيح (13-19 رقم)
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </form>
