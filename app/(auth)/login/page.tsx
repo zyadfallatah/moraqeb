@@ -17,6 +17,27 @@ export default async function page() {
               تسجيل الدخول
             </h2>
             <LoginForm />
+
+            {/* Test Credentials Section */}
+            <div className="mt-8 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+              <h3 className="text-lg font-semibold text-blue-800 mb-3 text-center">
+                بيانات الاختبار
+              </h3>
+              <div className="space-y-2 text-sm text-blue-700">
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">رقم الهوية:</span>
+                  <span className="font-mono bg-blue-100 px-2 py-1 rounded">
+                    1111100000
+                  </span>
+                </div>
+                <div className="flex justify-between items-center">
+                  <span className="font-medium">الرقم السري:</span>
+                  <span className="font-mono bg-blue-100 px-2 py-1 rounded">
+                    Abcd1234-
+                  </span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         <Image
