@@ -35,7 +35,7 @@ const LeaseCard = async ({ lease, subscription }: Props) => {
       byLicnese={lease.licenseNumber}
       isActiveSubscription={subscription !== null}
     >
-      <div className="shadow bg-white w-fit min-w-[400px]  p-5 border">
+      <div className="shadow bg-white w-full p-5 border">
         <div className="flex gap-4 justify-between items-start">
           <div className="flex gap-2">
             <Image src="/assets/logo.svg" alt="Logo" width={40} height={40} />

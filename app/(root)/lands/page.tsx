@@ -33,20 +33,20 @@ const Page = async () => {
       </div>
       <div className="flex max-w-7xl mx-auto mt-4 gap-5 mb-12">
         <div className="flex items-center gap-2">
-          <span className="min-w-[60px] h-5 bg-primary-dark rounded-full"></span>
+          <span className="min-w-[45px] md:min-w-[60px] h-5 bg-primary-dark rounded-full"></span>
           <p>مرخصة</p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="min-w-[60px] h-5 bg-accent rounded-full"></span>
+          <span className="min-w-[45px]  md:min-w-[60px] h-5 bg-accent rounded-full"></span>
           <p>مهمل</p>
         </div>
         <div className="flex items-center gap-2">
-          <span className="min-w-[60px] h-5 bg-warning rounded-full"></span>
+          <span className="min-w-[45px]  md:min-w-[60px] h-5 bg-warning rounded-full"></span>
           <p>مخالف</p>
         </div>
       </div>
       <OnlySubscribed>
-        <div className="max-w-7xl mx-auto mt-4 gap-5 mb-12 flex flex-wrap">
+        <div className="max-w-7xl mx-auto mt-4 gap-5 mb-12 grid md:grid-cols-2 lg:grid-cols-3">
           {licnesesWithSubscriptions!.map((lease) => (
             <LeaseCard
               key={lease.license.licenseNumber}
