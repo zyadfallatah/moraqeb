@@ -5,7 +5,7 @@ const page = () => {
   return (
     <div className="px-4 sm:px-6 max-w-7xl mx-auto">
       <h1 className="text-primary text-5xl mt-20 font-bold">عن مرقب</h1>
-      <p className="text-black text-2xl mt-5">
+      <p className="text-black text-xl md:text-2xl mt-5">
         مُرَقِّب هو منصة ذكية لإدارة وتحليل الأراضي في مكة المكرمة والمشاعر
         المقدسة، يربط الصكوك العقارية بالخرائط التفاعلية الرقمية ويستفيد من
         تقنيات الذكاء الاصطناعي وصور الأقمار الصناعية للكشف المبكر عن الإهمال،
@@ -14,7 +14,7 @@ const page = () => {
 
       <div className="border shadow shadow-[hsl(0,0%,80%)] rounded-3xl p-6 my-20">
         <h2 className="text-primary text-3xl font-bold">اختصاصات مرقب</h2>
-        <div className="flex gap-4">
+        <div className="flex flex-col md:flex-row gap-4">
           <AboutCards
             logo="about-1.svg"
             title="السرعة والدقة"
