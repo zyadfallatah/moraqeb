@@ -58,10 +58,12 @@ export default async function Home() {
           <Service
             title="رقمنة الصكوك الرقمية"
             description=" تحويل الصكوك الورقية إلى ملفات رقمية"
+            link="/lands"
           />
           <Service
             title="تتبع حالة ارضك"
             description=" يمكنك مشاهدة صور عن حالة ارضك مع تنبيهات وتوصيات "
+            link="/lands"
           />
         </div>
       </div>
