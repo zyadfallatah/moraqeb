@@ -14,7 +14,7 @@ const NoticeCard = ({ notice }: { notice: Notice }) => {
   const { type, message } = notice;
   const icon = mapIcons[type];
   return (
-    <div className="shadow shadow-[#747474] w-full flex justify-between items-center py-5 px-10 gap-5">
+    <div className="shadow shadow-[#747474] w-full flex flex-col md:flex-row justify-between items-center py-5 px-5 md:px-10 gap-5">
       <div className="flex items-center gap-5">
         <Image
           src={icon}
@@ -33,7 +33,7 @@ const NoticeCard = ({ notice }: { notice: Notice }) => {
       {type === "warning" && (
         <Link
           href={`/recommendation/${notice.licenseNumber}`}
-          className="bg-primary text-white rounded-2-xl px-5 py-2 min-w-[250px] text-center text-lg"
+          className="bg-primary text-white rounded-2-xl px-5 py-2 w-full md:max-w-[250px] text-center text-lg"
         >
           اذهب
         </Link>
