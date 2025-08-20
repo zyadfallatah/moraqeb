@@ -73,6 +73,14 @@ export const notices = pgTable("notices", {
   sentDate: timestamp("sent_date").defaultNow(),
 });
 
+export const recommendations = pgTable("recommendations", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  noticeId: uuid("notice_id")
+    .notNull()
+    .references(() => notices.id),
+  message: varchar("message", { length: 1000 }).notNull(),
+});
+
 // Relations
 export const usersRelations = relations(users, ({ many }) => ({
   licenses: many(licenses),

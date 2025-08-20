@@ -5,7 +5,7 @@ import React from "react";
 const Footer = () => {
   return (
     <footer className="text-white bg-primary-dark w-full px-8 py-8">
-      <div className="grid grid-cols-3 max-w-7xl mx-auto gap-10 w-full">
+      <div className="grid lg:grid-cols-3 max-w-7xl mx-auto gap-10 w-full">
         <div>
           <h3 className="text-white font-medium text-2xl pb-2 border-b mb-2 border-b-white w-full">
             ملخص

@@ -4,6 +4,7 @@ import {
   registerSubscription,
 } from "@/lib/actions/subscriptionActions";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useState } from "react";
 
 const PaymentForm = ({
@@ -264,12 +265,13 @@ const PaymentForm = ({
             تم تسجيل الاشتراك بنجاح
           </h2>
           <p className="text-green-700 mb-6">تم تفعيل رخصة المراقب الخاصة بك</p>
-          <button
+          <Link
+            href="/lands"
             type="button"
             className="bg-primary text-white py-3 px-6 rounded-md text-lg font-semibold hover:bg-primary-dark transition-colors"
           >
-            العودة للصفحة الرئيسية
-          </button>
+            العودة لصفحة الأراضي
+          </Link>
         </div>
       </div>
     );
@@ -277,10 +279,14 @@ const PaymentForm = ({
 
   return (
     <form onSubmit={handleSubmit}>
-      <h1 className="text-4xl font-semibold text-primary mt-10">تأكيد الدفع</h1>
+      <h1 className="text-center md:text-right mb-2 text-4xl font-semibold text-primary mt-10">
+        تأكيد الدفع
+      </h1>
 
       <div className="max-w-2xl mx-auto">
-        <h2 className="text-2xl text-primary-dark">طرق الدفع المتاحة</h2>
+        <h2 className="text-center md:text-right text-2xl text-primary-dark mb-5">
+          طرق الدفع المتاحة
+        </h2>
 
         <div className="flex gap-5 mb-5">
           <Image

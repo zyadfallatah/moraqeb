@@ -27,6 +27,7 @@ export const getLicenseNotices = async (licenseNumber: string) => {
 type LicenseWithNoticeType = License & {
   noticeType: Notice["type"] | "info";
   noticeMessage: Notice["message"];
+  noticeId?: Notice["id"];
 };
 const byLicense = new Map<string, LicenseWithNoticeType>();
 
@@ -64,6 +65,7 @@ export const getActiveLicensesWithNoticeType = async (userId: string) => {
           ...row.licenses,
           noticeType: row.notices?.type ?? "info",
           noticeMessage: row.notices?.message ?? "",
+          noticeId: row.notices?.id ?? "",
         });
       }
     }

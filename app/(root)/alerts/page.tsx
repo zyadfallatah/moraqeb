@@ -14,7 +14,7 @@ const page = async () => {
     ({ noticeType }) => noticeType === "violation"
   );
   return (
-    <div className="py-10 min-h-[calc(100vh-4rem-334px)]">
+    <div className="py-10 min-h-[calc(100vh-4rem-334px)] px-5">
       <h1 className="text-4xl text-primary text-center font-bold mb-5">
         الــتنـــبــــيـــــهـــــــــات
       </h1>

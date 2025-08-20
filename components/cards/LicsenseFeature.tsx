@@ -3,7 +3,7 @@ import React from "react";
 
 const LicsenseFeature = () => {
   return (
-    <div className="flex items-center bg-white border border-[hsla(0,0%,0%,32%)] rounded-4xl p-4 shadow gap-7">
+    <div className="flex flex-col lg:flex-row text-center md:text-right items-center bg-white border border-[hsla(0,0%,0%,32%)] rounded-4xl p-4 shadow gap-7">
       <Image
         src="/assets/ring-round.svg"
         alt="Licsense"

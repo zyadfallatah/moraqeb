@@ -30,7 +30,7 @@ const page = async ({
             لوحة معلوماتي
           </h1>
           <Image
-            className="absolute top-1/2 -translate-y-1/2 bg-[#f4f4f4e2] rounded-full border border-primary shadow p-4"
+            className="absolute -top-10 max-md:right-1/2 max-md:translate-x-1/2 md:top-1/2 md:-translate-y-1/2 bg-[#f4f4f4e2] rounded-full border border-primary shadow p-4 max-w-20 md:max-w-none"
             src="/assets/person.svg"
             alt="Profile"
             width={100}
@@ -38,7 +38,7 @@ const page = async ({
           />
         </div>
 
-        <div className="grid grid-cols-2 gap-x-20 gap-y-5 max-w-5xl mx-auto mt-20">
+        <div className="grid grid-cols-2 gap-x-5 gap-y-5 max-w-5xl mx-auto mt-20">
           <div className="flex flex-col">
             <label htmlFor="name">الاسم</label>
             <input
@@ -90,7 +90,7 @@ const page = async ({
 
         <div className="max-w-5xl mx-auto mt-12">
           <h2 className="text-2xl font-bold my-5">الصكوك الخاصة بي</h2>
-          <div className="grid grid-cols-3 gap-x-10  gap-y-6 shadow p-5">
+          <div className="grid grid-cols-1 max-h-[400px] overflow-y-scroll md:grid-cols-3 gap-x-10  gap-y-6 shadow p-5">
             {leases.map((lease) => (
               <ProfileLease
                 key={lease.licenseNumber}
@@ -103,7 +103,7 @@ const page = async ({
 
         <div className="max-w-5xl mx-auto mt-12 ">
           <h2 className="text-2xl font-bold my-5">سجل صفقات الأراضي والعقود</h2>
-          <div className="grid grid-cols-3 gap-x-10 gap-y-6 shadow p-5">
+          <div className="grid max-h-[400px] overflow-y-scroll md:grid-cols-3 gap-x-10 gap-y-6 shadow p-5">
             {leases.map((lease) => (
               <ProfileLease
                 key={lease.licenseNumber}
@@ -121,7 +121,7 @@ const page = async ({
       </div>
 
       <div className="bg-[#FFFEFC] py-20 px-6 rounded-t-2xl">
-        <div className="max-w-7xl mx-auto flex gap-8">
+        <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-8">
           <div className="flex flex-1 flex-col items-center">
             <h3 className="text-4xl font-bold text-black">المزايا</h3>
             <div className="grid grid-cols-2 gap-x-3 gap-y-5 max-w-5xl mx-auto mt-10">
@@ -135,7 +135,7 @@ const page = async ({
             <h3 className="text-4xl font-bold text-black mb-10">
               تفاصيل الاشتراك
             </h3>
-            <div className="bg-white w-full flex justify-center  border border-[hsla(0,0%,0%,37%)] rounded-4xl p-4 shadow divide-x-2">
+            <div className="bg-white w-full flex flex-col md:flex-row justify-center  border border-[hsla(0,0%,0%,37%)] rounded-4xl p-4 shadow divide-y-2 md:divide-y-0 md:divide-x-2">
               <LicsenseDetail
                 title="نوع الاشتراك"
                 description={`رخصة لمدة 360 يومًا`}

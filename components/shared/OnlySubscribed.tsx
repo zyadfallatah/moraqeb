@@ -35,7 +35,7 @@ const OnlySubscribed = async ({
 
   if (isActiveSubscription === false) {
     return (
-      <div className="shadow bg-white w-fit min-w-[400px] p-5 border">
+      <div className="shadow bg-white w-full p-5 border">
         <div className="blur-[2px]">
           <div className="flex gap-4 justify-between items-start">
             <div className="flex gap-2">

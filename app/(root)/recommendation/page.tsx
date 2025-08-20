@@ -13,7 +13,7 @@ const page = async () => {
     ({ noticeType }) => noticeType === "warning"
   );
   return (
-    <div className="py-10 min-h-[calc(100vh-4rem-334px)]">
+    <div className="py-10 min-h-[calc(100vh-4rem-334px)] px-5">
       <h1 className="text-4xl text-primary text-center font-bold mb-5">
         الــتـــــوصــــــيــــــــــــات
       </h1>
@@ -38,10 +38,10 @@ const page = async () => {
           return (
             <div
               key={licenseNumber}
-              className="max-w-7xl mx-auto shadow-md rounded-lg px-10 py-8 mt-5 flex items-center justify-between"
+              className="max-w-7xl mx-auto shadow-md rounded-lg px-10 py-8 mt-5 flex flex-col md:flex-row items-center justify-between"
             >
               <div>
-                <h2 className="text-primary text-2xl font-bold">
+                <h2 className="text-accent text-2xl font-bold">
                   {district} ، قطعة {landNumber}
                 </h2>
 

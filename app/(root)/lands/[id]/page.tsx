@@ -12,6 +12,7 @@ import React from "react";
 import ArcGISMap from "@/components/ArcGISMap";
 import LiscenseInfo from "@/components/cards/LiscenseInfo";
 import { formatDate } from "@/lib/utils";
+
 const mapPermissions = {
   resident: "سكني",
   market: "تجاري",
@@ -52,15 +53,15 @@ const page = async ({
   const permissionName = mapPermissions[permission];
 
   return (
-    <div className="max-w-7xl mx-auto py-5">
-      <div className="flex items-center">
-        <h1 className="text-4xl font-bold text-primary py-5 text-center my-10 flex-1">
+    <div className="max-w-7xl mx-auto py-10 px-5">
+      <div className="flex flex-col-reverse md:flex-row items-center">
+        <h1 className="text-4xl font-bold text-primary md:py-5 text-center my-10 flex-1">
           قطعة {landNumber} ، {district}
         </h1>
         <ArrowBack />
       </div>
 
-      <div className="text-center w-full mx-auto min-h-[350px] shadow border rounded-xl grid place-items-center">
+      <div className="text-center w-full mx-auto min-h-[350px] shadow border rounded-xl grid place-items-center px-4">
         <ArcGISMap
           leases={[license!]}
           showLandMarking={true}
@@ -78,8 +79,10 @@ const page = async ({
           </div>
         )}
 
-        <div className="max-w-7xl bg-white shadow shadow-black py-4 mt-5 px-20">
-          <h2 className="text-primary text-3xl text-center">معلومات الصك</h2>
+        <div className="max-w-7xl bg-white shadow shadow-black py-4 mt-5 px-8 md:px-20">
+          <h2 className="text-primary text-3xl text-center mb-6">
+            معلومات الصك
+          </h2>
           <LiscenseInfo
             title="اسم الأرض"
             info={`${district} ،  قطعة ${landNumber}`}
