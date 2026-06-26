@@ -86,12 +86,6 @@ npm run dev
 
 ---
 
-## Live Demo
-
-[moraqeb.vercel.app](https://moraqeb.vercel.app)
-
----
-
 ## Author
 
 Built by [Ziyad Fallatah](https://zyadfallatah.com)
